@@ -6,15 +6,13 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <div className='w-full'>
-      <div className='max-w-6xl mx-auto'>
+    <div className="w-full">
+      <div className="max-w-6xl mx-auto">
         <Nav />
         <Hero />
         <Features />
         <Cta />
-      </div></div>
-
-
-
+      </div>
+    </div>
   )
 }
