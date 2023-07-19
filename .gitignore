@@ -3,7 +3,6 @@ node_modules/
 
 # Private
 .env
-.env*.local
 
 # TypeScript
 *.tsbuildinfo
