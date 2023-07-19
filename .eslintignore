@@ -1,0 +1,14 @@
+# Big!
+node_modules/
+
+# File system configurations.
+.DS_Store
+desktop.ini
+
+# Build outputs
+dist/
+
+# Logs
+logs/
+*.log
+.pnpm-debug.log*
