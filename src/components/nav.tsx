@@ -1,15 +1,12 @@
 'use client'
 
-import { Link, NavigationMenuItem, NavigationMenuLink } from '@radix-ui/react-navigation-menu'
+import { Link, NavigationMenuItem } from '@radix-ui/react-navigation-menu'
 import { Button } from './ui/button'
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
-import { LogIn } from 'lucide-react'
 
 const Nav = () => {
   return (
