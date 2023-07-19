@@ -2,7 +2,6 @@ import Cta from '@/components/cta'
 import Features from '@/components/features'
 import Hero from '@/components/hero'
 import Nav from '@/components/nav'
-import Faq from '@/components/faq'
 import Image from 'next/image'
 
 export default function Home() {
@@ -13,7 +12,6 @@ export default function Home() {
         <Hero />
         <Features />
         <Cta />
-        <Faq />
       </div></div>
 
 
