@@ -8,8 +8,8 @@ const config = {
         protocol: 'https',
         hostname: 'tailwindui.com',
       },
-    ]
-  }
+    ],
+  },
 }
 
 export default config
