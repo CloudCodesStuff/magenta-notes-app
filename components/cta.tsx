@@ -27,7 +27,7 @@ const Cta = () => {
                         Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-                        <Button variant={""}>Get started</Button>
+                        <Button >Get started</Button>
                         <Button variant={"link"}>Learn more</Button>
                     </div>
                 </div>
