@@ -1,4 +1,4 @@
-import { BellRing, Share, Text, Timer } from 'lucide-react'
+// import { BellRing, Share, Text, Timer } from 'lucide-react'
 
 const Features = () => {
   return (
@@ -19,7 +19,7 @@ const Features = () => {
             <div className="relative pl-16">
               <dt className="text-base font-semibold leading-7 text-gray-900">
                 <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-300">
-                  <Timer className="w-6 h-6 text-white"></Timer>
+                  {/* <Timer className="w-6 h-6 text-white"></Timer> */}
                 </div>
                 Easy Note Creation
               </dt>
@@ -31,7 +31,7 @@ const Features = () => {
             <div className="relative pl-16">
               <dt className="text-base font-semibold leading-7 text-gray-900">
                 <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-300">
-                  <Text className="w-6 h-6 text-white"></Text>
+                  {/* <Text className="w-6 h-6 text-white"></Text> */}
                 </div>
                 Rich Text Formatting
               </dt>
@@ -43,7 +43,7 @@ const Features = () => {
             <div className="relative pl-16">
               <dt className="text-base font-semibold leading-7 text-gray-900">
                 <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-300">
-                  <BellRing className="w-6 h-6 text-white"></BellRing>
+                  {/* <BellRing className="w-6 h-6 text-white"></BellRing> */}
                 </div>
                 Reminders and Notifications
               </dt>
@@ -55,7 +55,7 @@ const Features = () => {
             <div className="relative pl-16">
               <dt className="text-base font-semibold leading-7 text-gray-900">
                 <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-300">
-                  <Share className="w-6 h-6 text-white"></Share>
+                  {/* <Share className="w-6 h-6 text-white"></Share> */}
                 </div>
                 Collaboration and Sharing
               </dt>
