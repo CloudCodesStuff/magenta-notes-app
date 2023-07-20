@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChevronDown } from 'lucide-react'
-import AccordionPrimitive from '@radix-ui/react-accordion'
+import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@/lib/utils'
 import { UiForwardRef } from './forward-ref'
 

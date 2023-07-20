@@ -27,13 +27,15 @@ import type { OnlyMutableProperties } from '@/lib/utils/properties'
  * ))
  * ```
  */
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function UiForwardRef<T extends React.ForwardRefExoticComponent<any>>(
   render: React.ForwardRefRenderFunction<React.ElementRef<T>, React.ComponentPropsWithoutRef<T>>,
   properties: Partial<
     OnlyMutableProperties<
       React.ForwardRefExoticComponent<
         React.PropsWithoutRef<React.ElementRef<T>> &
-          React.RefAttributes<React.ComponentPropsWithoutRef<T>>
+        React.RefAttributes<React.ComponentPropsWithoutRef<T>>
       >
     >
   > = {},
@@ -46,7 +48,7 @@ export function UiForwardRef<T extends React.ForwardRefExoticComponent<any>>(
   Object.keys(properties).forEach((property) => {
     componentWithForwardedRef[property as keyof typeof properties] = properties[
       property as keyof typeof properties
-    ] as any
+    ] as any // eslint-disable-line @typescript-eslint/no-explicit-any
   })
 
   return componentWithForwardedRef
