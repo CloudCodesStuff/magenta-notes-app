@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Button } from './ui/button'
 
-const Cta = () => {
+export default function Cta() {
   return (
     <div className="mx-auto container py-24 ">
       <div className="relative isolate overflow-hidden  px-6 pt-16 shadow-2xl sm:rounded-xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
@@ -52,5 +52,3 @@ const Cta = () => {
     </div>
   )
 }
-
-export default Cta

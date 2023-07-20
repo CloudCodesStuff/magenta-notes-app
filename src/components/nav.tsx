@@ -34,11 +34,9 @@ const Nav = () => {
           </NavigationMenu>
         </div>
         <div className="flex gap-4">
-          <div></div>
           <div className="flex gap-3">
-            <Button variant={'secondary'}>Log in</Button>
-
-            <Button variant={'default'}>Sign up</Button>
+            <a href="/api/auth/signin">Log In</a>
+            <Button variant="default">Sign up</Button>
           </div>
         </div>
       </div>

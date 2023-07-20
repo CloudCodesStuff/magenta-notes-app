@@ -1,0 +1,28 @@
+# Big!
+node_modules/
+
+# Private
+.env
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# File system configurations.
+.DS_Store
+desktop.ini
+
+# Build outputs.
+build/
+
+# Next.js outputs.
+.next/
+out/
+
+# Vercel.
+.vercel
+
+# Logs.
+logs/
+*.log
+.pnpm-debug.log*
