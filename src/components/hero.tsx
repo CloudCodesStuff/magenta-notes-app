@@ -1,6 +1,6 @@
 import { Button } from './ui/button'
 
-const Hero = () => {
+export default function Hero() {
   return (
     <>
       <div className="flex px-6 pt-14 lg:px-8   flex-col hero-h  justify-center space text-center items-center ">
@@ -22,5 +22,3 @@ const Hero = () => {
     </>
   )
 }
-
-export default Hero

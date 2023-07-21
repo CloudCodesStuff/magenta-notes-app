@@ -1,14 +1,14 @@
-'use client'
-
-import { Link, NavigationMenuItem } from '@radix-ui/react-navigation-menu'
+import Link from 'next/link'
 import { Button } from './ui/button'
 import {
   NavigationMenu,
   NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
 
-const Nav = () => {
+export default function Nav() {
   return (
     <nav className="container mb-7 ">
       <div className="flex h-16 items-center justify-between border-b border-b-slate-200 py-4">
@@ -16,26 +16,26 @@ const Nav = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link href="/docs" className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
                   test
-                </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/docs" className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
                   Features
-                </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/docs" className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
                   Documentation
-                </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
         <div className="flex gap-4">
           <div className="flex gap-3">
-            <a href="/api/auth/signin">Log In</a>
+            <Link href="/api/auth/signin">Log In</Link>
             <Button variant="default">Sign up</Button>
           </div>
         </div>
@@ -43,5 +43,3 @@ const Nav = () => {
     </nav>
   )
 }
-
-export default Nav

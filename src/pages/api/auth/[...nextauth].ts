@@ -9,7 +9,7 @@ const github = GithubProvider({
   clientSecret: env.GITHUB_SECRET ?? '',
 })
 
-const handler = NextAuth({
+export default NextAuth({
   // I don't like Next-Auth because their codebase is abysmal, which results in issues like type inconsistencies.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   adapter: PrismaAdapter(db) as any,
@@ -48,7 +48,3 @@ const handler = NextAuth({
     },
   },
 })
-
-export const GET = handler
-
-export const POST = handler
