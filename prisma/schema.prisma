@@ -1,11 +1,9 @@
-// File: schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -22,8 +20,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -44,9 +41,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  notespaces    Notespace[]
-
-  Note Note[]
+  workspaces    Workspace[]
 }
 
 model VerificationToken {
@@ -57,25 +52,24 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Workspace {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  notes       Note[]
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Note {
   id          Int       @id @default(autoincrement())
-  content     String
-  color       String // color code? Tailwind classes?
-  user        User?     @relation(fields: [userId], references: [id])
-  userId      String? // Updated the type to String
-  notespace   Notespace @relation(fields: [notespaceId], references: [id])
-  notespaceId Int
+  color       String?
+  content     Json
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
 
-model Notespace {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  user        User?    @relation(fields: [userId], references: [id])
-  userId      String? // Updated the type to String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  notes       Note[]
-}
