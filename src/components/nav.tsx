@@ -7,6 +7,7 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
+import Navavatar from './nav-avatar'
 
 export default function Nav() {
   return (
@@ -37,6 +38,7 @@ export default function Nav() {
           <div className="flex gap-3">
             <Link href="/api/auth/signin">Log In</Link>
             <Button variant="default">Sign up</Button>
+            <Navavatar></Navavatar>
           </div>
         </div>
       </div>
