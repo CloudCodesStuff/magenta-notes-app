@@ -1,11 +1,9 @@
-// File: schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -22,8 +20,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -45,8 +42,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   notespaces    Notespace[]
-
-  Note Note[]
+  Note          Note[]
 }
 
 model VerificationToken {
@@ -60,9 +56,9 @@ model VerificationToken {
 model Note {
   id          Int       @id @default(autoincrement())
   content     String
-  color       String // color code? Tailwind classes?
+  color       String
   user        User?     @relation(fields: [userId], references: [id])
-  userId      String? // Updated the type to String
+  userId      String?
   notespace   Notespace @relation(fields: [notespaceId], references: [id])
   notespaceId Int
   createdAt   DateTime  @default(now())
@@ -74,7 +70,7 @@ model Notespace {
   name        String
   description String?
   user        User?    @relation(fields: [userId], references: [id])
-  userId      String? // Updated the type to String
+  userId      String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   notes       Note[]

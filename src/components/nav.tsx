@@ -1,4 +1,3 @@
-
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -6,7 +5,7 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
-import Navavatar from './nav-avatar'
+import NavAvatar from './nav-avatar'
 
 export default function Nav() {
   return (
@@ -35,7 +34,7 @@ export default function Nav() {
         </div>
         <div className="flex gap-4">
           <div className="flex gap-3">
-            <Navavatar></Navavatar>
+            <NavAvatar></NavAvatar>
           </div>
         </div>
       </div>

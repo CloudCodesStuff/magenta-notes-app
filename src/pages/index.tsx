@@ -44,7 +44,9 @@ export default function Home() {
         <span>Notes: {query.data}</span>
         <form onSubmit={onSubmit}>
           <input {...register('note')} className="border m-2" />
-          <button type="submit" className="bg-red-400 rounded p-2">Set New Note</button>
+          <button type="submit" className="bg-red-400 rounded p-2">
+            Set New Note
+          </button>
         </form>
       </div>
 
