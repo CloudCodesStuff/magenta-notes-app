@@ -8,6 +8,8 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
 
+    DropdownMenuSeparator,
+
     DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { LogOut } from "lucide-react";
@@ -42,9 +44,9 @@ export default function Navavatar() {
                                 </p>
                             </div>
                         </DropdownMenuLabel>
-
+                        <DropdownMenuSeparator></DropdownMenuSeparator>
                         <DropdownMenuItem onClick={() => signOut()}>
-                            <LogOut></LogOut>  Log out
+                            <LogOut className="w-5 h-5" />   Log out
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -54,6 +56,7 @@ export default function Navavatar() {
     return (
         <>
             <Button onClick={() => signIn()}>Sign in</Button>
+
         </>
     )
 }
