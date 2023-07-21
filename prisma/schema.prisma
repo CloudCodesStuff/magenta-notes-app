@@ -54,3 +54,21 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Note {
+  id            String    @id @default(cuid())
+  title         String?
+  content       Json?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model NoteTable {
+  id            String    @id @default(cuid())
+  title         String?
+  notes         Note[]
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
