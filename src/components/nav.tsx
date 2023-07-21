@@ -1,5 +1,3 @@
-import Link from 'next/link'
-import { Button } from './ui/button'
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -7,7 +5,7 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
-import Navavatar from './nav-avatar'
+import NavAvatar from './nav-avatar'
 
 export default function Nav() {
   return (
@@ -17,18 +15,13 @@ export default function Nav() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
-                  test
+                <NavigationMenuLink href="/" className={navigationMenuTriggerStyle()}>
+                  Home
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
-                  Features
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
-                  Documentation
+                <NavigationMenuLink href="/examples/form" className={navigationMenuTriggerStyle()}>
+                  Examples
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -36,9 +29,7 @@ export default function Nav() {
         </div>
         <div className="flex gap-4">
           <div className="flex gap-3">
-            <Link href="/api/auth/signin">Log In</Link>
-            <Button variant="default">Sign up</Button>
-            <Navavatar></Navavatar>
+            <NavAvatar></NavAvatar>
           </div>
         </div>
       </div>
