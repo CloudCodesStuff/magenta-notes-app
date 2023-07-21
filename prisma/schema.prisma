@@ -42,7 +42,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   notespaces    Notespace[]
-  Note          Note[]
 }
 
 model VerificationToken {
