@@ -4,16 +4,15 @@ import { Button } from "./ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
+
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
+
     DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { LogOut } from "lucide-react";
 export default function Navavatar() {
-    const getInitials = (name: String) => {
+    const getInitials = (name: string) => {
         const names = name.split(" ");
         return names
             .map((word) => word.charAt(0))
