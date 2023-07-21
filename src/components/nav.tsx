@@ -7,7 +7,6 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
-import { useSession, signIn, signOut } from "next-auth/react"
 import Navavatar from './nav-avatar'
 
 export default function Nav() {
