@@ -15,18 +15,13 @@ export default function Nav() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
-                  test
+                <NavigationMenuLink href="/" className={navigationMenuTriggerStyle()}>
+                  Home
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
-                  Features
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="/docs" className={navigationMenuTriggerStyle()}>
-                  Documentation
+                <NavigationMenuLink href="/examples/form" className={navigationMenuTriggerStyle()}>
+                  Examples
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
