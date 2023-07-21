@@ -19,7 +19,7 @@ function getBaseUrl() {
 }
 
 export const trpc = createTRPCNext<AppRouter>({
-  config(_opts) {
+  config() {
     return {
       transformer,
       links: [
