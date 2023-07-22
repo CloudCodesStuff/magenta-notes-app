@@ -16,7 +16,8 @@ export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
                 >
                     {workspace.name}
                 </Link>
-                <div>
+                <p>{workspace.description}</p>
+                <div className="mt-1">
                     <p className="text-sm text-muted-foreground">
                         {formatDate(workspace.createdAt?.toDateString())}
                     </p>
