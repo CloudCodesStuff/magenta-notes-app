@@ -5,7 +5,7 @@ import { db } from '@/lib/db'
  * @param userId The user's ID.
  */
 export async function getUserWorkspaces(userId: string) {
-  const allWorkspaces = await db.notespace.findMany({
+  const allWorkspaces = await db.workspace.findMany({
     where: {
       userId,
     },
