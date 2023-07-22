@@ -5,9 +5,9 @@ import { db } from '@/lib/db'
  * @param userId The user's ID.
  */
 export async function getUserWorkspaces(userId: string) {
-  const allWorkspaces = await db.workspace.findMany({
+  const ClientWorkspaces = await db.workspace.findMany({
     where: {
-      userId,
+      userId: userId,
     },
     select: {
       id: true,
@@ -22,5 +22,5 @@ export async function getUserWorkspaces(userId: string) {
     },
   })
 
-  return allWorkspaces
+  return ClientWorkspaces
 }
