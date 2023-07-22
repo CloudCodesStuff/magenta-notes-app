@@ -1,6 +1,5 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { db } from '@/lib/db';
 import { getAllWorkspaces } from '@/lib/services/workspaces/get-all';
 
 export const metadata = {
