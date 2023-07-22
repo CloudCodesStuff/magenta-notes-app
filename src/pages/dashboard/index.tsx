@@ -1,5 +1,5 @@
 
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
 import { db } from '@/lib/db'
 export const metadata = {
