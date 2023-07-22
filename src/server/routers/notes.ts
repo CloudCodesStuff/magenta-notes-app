@@ -1,8 +1,5 @@
-import { getUserWorkspaces } from '@/lib/services/workspaces/get-for-user'
-import { getAllWorkspaces } from '@/lib/services/workspaces/get-all'
 import { isAuthenticated } from '../middleware/is-authenticated'
 import { procedure, router } from '../trpc'
-import { createWorkspaceInput, createWorkspace } from '@/lib/services/workspaces/create'
 import { createNote, createNoteInput } from '@/lib/services/notes/create'
 import { getAllNotes } from '@/lib/services/notes/get-all'
 import { getWorkspaceNotes } from '@/lib/services/notes/get-for-workspace'
