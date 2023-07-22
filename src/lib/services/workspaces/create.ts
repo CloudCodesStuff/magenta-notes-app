@@ -1,6 +1,5 @@
 import { db } from '@/lib/db'
 import { z } from 'zod'
-import { createNoteInput } from '../notes/create'
 
 /**
  
