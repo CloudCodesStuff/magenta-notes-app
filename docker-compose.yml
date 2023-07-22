@@ -1,11 +1,21 @@
 version: '3.9'
 services:
+  # db:
+  #   image: mysql:8
+  #   restart: always
+  #   ports:
+  #     - 7200:3306
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: magenta_tigers
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: yes
+
   db:
-    image: mysql:8
+    image: postgres
     restart: always
     ports:
-      - 7200:3306
+      - 5432:5432
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: magenta_tigers
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: magenta_tigers
