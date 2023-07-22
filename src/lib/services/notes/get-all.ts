@@ -3,11 +3,13 @@ import { db } from '@/lib/db'
 /**
  * Find all workspaces.
  */
-export async function getAllWorkspaces() {
-  const allWorkspaces = await db.workspace.findMany({
+export async function getAllNotes() {
+  const allNotes = await db.note.findMany({
     select: {
       id: true,
-      name: true,
+      color: true,
+      content: true,
+      workspace: true,
       createdAt: true,
     },
     orderBy: {
@@ -15,5 +17,5 @@ export async function getAllWorkspaces() {
     },
   })
 
-  return allWorkspaces
+  return allNotes
 }
