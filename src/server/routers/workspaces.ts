@@ -32,6 +32,7 @@ const workspacesRouter = router({
    */
   getWorkspacesForCurrentUser: procedure.use(isAuthenticated).query(async (opts) => {
     const workspaces = getUserWorkspaces(opts.ctx.session.user.id)
+    console.log(opts.ctx.session.user.id)
     return workspaces
   }),
 })
