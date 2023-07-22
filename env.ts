@@ -1,8 +1,10 @@
-import { type } from 'arktype'
+import { z } from 'zod'
 
-const env = type({
-  'GITHUB_ID?': 'string',
-  'GITHUB_SECRET?': 'string',
-}).assert({ ...process.env })
+const env = z
+  .object({
+    GITHUB_ID: z.string(),
+    GITHUB_SECRET: z.string(),
+  })
+  .parse({ ...process.env })
 
 export default env

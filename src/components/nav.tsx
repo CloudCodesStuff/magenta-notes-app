@@ -24,12 +24,17 @@ export default function Nav() {
                   Examples
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink href="/editor" className={navigationMenuTriggerStyle()}>
+                  Editor
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
         <div className="flex gap-4">
           <div className="flex gap-3">
-            <NavAvatar></NavAvatar>
+            <NavAvatar />
           </div>
         </div>
       </div>

@@ -1,14 +1,17 @@
 import './globals.css'
 
+import { SessionProvider } from 'next-auth/react'
+import type { Session } from 'next-auth'
 import type { AppProps } from 'next/app'
 import { trpc } from '@/lib/trpc'
-import { SessionProvider } from 'next-auth/react'
 import Nav from '@/components/nav'
 
-function App({ Component, pageProps }: AppProps) {
+type Props = AppProps<{ session: Session }>
+
+function App({ Component, pageProps: { session, ...pageProps } }: Props) {
   return (
-    <SessionProvider>
-      <Nav />
+    <SessionProvider session={session}>
+      <Nav {...pageProps} />
       <Component {...pageProps} />
     </SessionProvider>
   )
