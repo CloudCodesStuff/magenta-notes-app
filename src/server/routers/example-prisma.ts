@@ -36,7 +36,7 @@ const examplePrismaRouter = router({
    * Get all workspaces in the database.
    */
   getWorkspaces: procedure.query(async () => {
-    const allWorkspaces = await getAllWorkspaces('id')
+    const allWorkspaces = await getAllWorkspaces('clkdjnxlk0000l608hsj9jxb2')
     return allWorkspaces
   }),
 })
