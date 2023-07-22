@@ -12,7 +12,7 @@ const workspacesRouter = router({
   /**
    * Get all workspaces in the database.
    */
-  getWorkspaces: procedure.query(async () => {
+  getAllWorkspaces: procedure.query(async () => {
     const allWorkspaces = await getAllWorkspaces()
     return allWorkspaces
   }),
@@ -20,7 +20,7 @@ const workspacesRouter = router({
   /**
    * Get the currently authenticated user's workspaces.
    */
-  getWorkspace: procedure.use(isAuthenticated).query(async (opts) => {
+  getWorkspacesForCurrentUser: procedure.use(isAuthenticated).query(async (opts) => {
     const workspaces = getUserWorkspaces(opts.ctx.session.user.id)
     return workspaces
   }),
