@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { LogOut } from 'lucide-react'
+import { LogOut, User } from 'lucide-react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
@@ -11,6 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+import Link from 'next/link'
 
 const getInitials = (name: string) =>
     name
@@ -33,7 +34,7 @@ export default function NavAvatar() {
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                        <AvatarImage src={session.user.image ?? ''} alt={initials} />
+                        <AvatarImage src={session.user.image ?? ''} alt={session.user.name ?? ''} />
                         <AvatarFallback>{initials}</AvatarFallback>
                     </Avatar>
                 </Button>
@@ -45,9 +46,14 @@ export default function NavAvatar() {
                         <p className="text-xs leading-none text-muted-foreground">{session.user.email}</p>
                     </div>
                 </DropdownMenuLabel>
+                <DropdownMenuItem asChild>
+                    <Link href="/dashboard">
+                        Dashboard
+                    </Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator></DropdownMenuSeparator>
                 <DropdownMenuItem onClick={() => signOut()}>
-                    <LogOut className="w-5 h-5" /> Log out
+                    Log out
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

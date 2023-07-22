@@ -41,7 +41,18 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  workspaces    Workspace[]
+  notespaces    Notespace[] // Correctly referencing the Notespace model
+}
+
+model Notespace {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  notes       Note[]
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String? // Making the userId field nullable, as the relation is optional
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -52,24 +63,12 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Workspace {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  notes       Note[]
-  user        User?    @relation(fields: [userId], references: [id])
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
 model Note {
   id          Int       @id @default(autoincrement())
   color       String?
   content     Json
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspace   Notespace @relation(fields: [workspaceId], references: [id])
   workspaceId Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
-
