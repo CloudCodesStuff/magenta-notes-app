@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { LogOut, User } from 'lucide-react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
