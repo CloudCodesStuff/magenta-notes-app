@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default function Dashboard() {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const [workspaces, setWorkspaces] = useState<{ id: number; name: string; createdAt: Date }[]>([]);
 
     useEffect(() => {
