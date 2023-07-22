@@ -15,15 +15,16 @@ export default function Dashboard() {
         <div className="grid items-start gap-8">
           <div className='flex items-center justify-between px-2'>
             <div className="grid gap-1">
-              <h1 className="font-heading text-3xl md:text-4xl">
+              <h1 className="font-bold text-3xl md:text-4xl">
                 Workspaces
               </h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-slate-600">
                 Create and manage workspaces.
               </p>
             </div>
             <Button>
-              <Plus className='mr-2 h-4 w-4'>New Workspace</Plus>
+              <Plus className='mr-2 h-4 w-4'></Plus>
+              New Workspace
             </Button>
           </div>
           {workspaces.data?.length ? (
