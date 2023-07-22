@@ -10,15 +10,17 @@ export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
     return (
         <div className="flex items-center justify-between p-4">
             <div className="grid gap-1">
-                <Link
-                    href={`/dashboard/${workspace.id}`}
-                    className="font-semibold hover:underline"
-                >
-                    {workspace.name}
-                </Link>
-                <p>{workspace.description}</p>
+                <div>
+                    <Link
+                        href={`/dashboard/${workspace.id}`}
+                        className="font-semibold hover:underline"
+                    >
+                        {workspace.name}
+                    </Link>
+                    <p className="text-sm">{workspace.description}</p>
+                </div>
                 <div className="mt-1">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-slate-500">
                         {formatDate(workspace.createdAt?.toDateString())}
                     </p>
                 </div>
