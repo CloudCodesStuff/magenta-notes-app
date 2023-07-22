@@ -4,7 +4,7 @@ import { db } from '@/lib/db'
  * Find all workspaces.
  */
 export async function getAllWorkspaces() {
-  const allWorkspaces = await db.notespace.findMany({
+  const allWorkspaces = await db.workspace.findMany({
     select: {
       id: true,
       name: true,

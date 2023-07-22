@@ -1,4 +1,4 @@
-import { NotespaceItem } from '@/components/notespaceitem'
+import { WorkspaceItem } from '@/components/workspaceitem'
 import { trpc } from '@/lib/trpc'
 
 export const metadata = {
@@ -14,7 +14,7 @@ export default function Dashboard() {
         {workspaces.data?.length ? (
           <div className="divide-y divide-border rounded-md border">
             {workspaces.data.map((workspace) => (
-              <NotespaceItem key={workspace.id} notespace={workspace} />
+              <WorkspaceItem key={workspace.id} workspace={workspace} />
             ))}
           </div>
         ) : (

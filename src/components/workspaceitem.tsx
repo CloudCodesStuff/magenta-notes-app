@@ -1,24 +1,24 @@
 import Link from "next/link"
-import { Notespace } from "@prisma/client"
+import { Workspace } from "@prisma/client"
 import { formatDate } from "@/lib/formatdate"
 
-interface NotespaceItemProps {
-    notespace: Pick<Notespace, "id" | "name" | "description" | "userId" | "createdAt" | "updatedAt">
+interface WorkspaceItemProps {
+    workspace: Pick<Workspace, "id" | "name" | "description" | "userId" | "createdAt" | "updatedAt">
 }
 
-export function NotespaceItem({ notespace }: NotespaceItemProps) {
+export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
     return (
         <div className="flex items-center justify-between p-4">
             <div className="grid gap-1">
                 <Link
-                    href={`/dashboard/${notespace.id}`}
+                    href={`/dashboard/${workspace.id}`}
                     className="font-semibold hover:underline"
                 >
-                    {notespace.name}
+                    {workspace.name}
                 </Link>
                 <div>
                     <p className="text-sm text-muted-foreground">
-                        {formatDate(notespace.createdAt?.toDateString())}
+                        {formatDate(workspace.createdAt?.toDateString())}
                     </p>
                 </div>
             </div>
