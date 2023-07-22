@@ -12,7 +12,10 @@ export async function getUserWorkspaces(userId: string) {
     select: {
       id: true,
       name: true,
+      description: true,
+      userId: true,
       createdAt: true,
+      updatedAt: true,
     },
     orderBy: {
       updatedAt: 'desc',
