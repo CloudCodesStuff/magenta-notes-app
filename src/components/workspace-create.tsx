@@ -5,7 +5,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormDescription,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -34,7 +33,10 @@ export interface CreateWorkspaceDialogProps {
 export function CreateWorkspaceDialog(props: CreateWorkspaceDialogProps) {
   const form = useForm<CreateWorkspaceData>({
     resolver: zodResolver(createWorkspaceSchema),
-    mode: 'onBlur',
+    defaultValues: {
+      name: '',
+      description: '',
+    },
   })
 
   const mutation = trpc.workspaces.createWorkspace.useMutation()
@@ -58,7 +60,7 @@ export function CreateWorkspaceDialog(props: CreateWorkspaceDialogProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>New workspace</DialogTitle>
-          <DialogDescription>Describe your new workspace</DialogDescription>
+          <DialogDescription>What do you want to name your workspace?</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -82,14 +84,10 @@ export function CreateWorkspaceDialog(props: CreateWorkspaceDialogProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
-
-                  <FormDescription>
-                    (Optional) Additional information about your workspace.
-                  </FormDescription>
-
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
