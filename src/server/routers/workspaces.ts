@@ -4,6 +4,7 @@ import { isAuthenticated } from '../middleware/is-authenticated'
 import { procedure, router } from '../trpc'
 import { createWorkspace } from '@/lib/services/workspaces/create'
 import { createWorkspaceSchema } from '@/lib/schemas/create-workspace'
+import { deleteWorkspace } from '@/lib/services/workspaces/delete'
 
 const workspacesRouter = router({
   /**
@@ -16,6 +17,17 @@ const workspacesRouter = router({
     .mutation(async (opts) => {
       const workspace = await createWorkspace({ ...opts.input, userId: opts.ctx.session.user.id })
       return workspace
+    }),
+
+  deleteWorkspace: procedure
+    .use(isAuthenticated)
+    .input(id)
+    .mutation(async (opts) => {
+      const DeletedWorkspace = await deleteWorkspace({
+        ...opts.input,
+        userId: opts.ctx.session.user.id,
+      })
+      return DeletedWorkspace
     }),
 
   /**
