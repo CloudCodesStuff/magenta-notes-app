@@ -1,15 +1,15 @@
+import { Button } from './ui/button'
 import {
+  NavigationMenuLink,
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
-import NavAvatar from './nav-avatar'
 
 export default function Nav() {
   return (
-    <nav className="container mb-7 px-5 ">
+    <nav className="container mb-7 ">
       <div className="flex h-16 items-center justify-between border-b border-b-slate-200 py-4">
         <div className="flex gap-6 md:gap-10">
           <NavigationMenu>
@@ -33,8 +33,10 @@ export default function Nav() {
           </NavigationMenu>
         </div>
         <div className="flex gap-4">
+          <div></div>
           <div className="flex gap-3">
-            <NavAvatar />
+            <Button variant={'secondary'}>Log in</Button>
+            <Button variant={'default'}>Sign up</Button>
           </div>
         </div>
       </div>

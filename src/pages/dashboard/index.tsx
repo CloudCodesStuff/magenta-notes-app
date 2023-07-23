@@ -1,8 +1,8 @@
 import {
   CreateWorkspaceDialog,
   type CreateWorkspaceDialogProps,
-} from '@/components/workspacecreate'
-import { WorkspaceItem } from '@/components/workspaceitem'
+} from '@/components/workspace-create'
+import { WorkspaceItem } from '@/components/workspace-item'
 import { trpc } from '@/lib/trpc'
 import { File } from 'lucide-react'
 import { useRouter } from 'next/router'
