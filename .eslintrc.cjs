@@ -8,7 +8,7 @@ const config = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
-  plugins: ['@typescript-eslint', 'simple-import-sort', 'tailwindcss'],
+  plugins: ['react', '@typescript-eslint', 'simple-import-sort', 'tailwindcss'],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
