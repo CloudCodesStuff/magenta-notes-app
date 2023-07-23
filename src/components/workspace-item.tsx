@@ -18,9 +18,7 @@ export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
           <p className="text-sm">{workspace.description}</p>
         </div>
         <div className="mt-1">
-          <p className="text-sm text-slate-500">
-            {formatDate(workspace.createdAt?.toDateString())}
-          </p>
+          <p className="text-sm">{formatDate(workspace.createdAt?.toDateString())}</p>
         </div>
       </div>
       <DeleteWorkspace workspace={workspace}></DeleteWorkspace>

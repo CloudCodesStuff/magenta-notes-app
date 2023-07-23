@@ -27,7 +27,9 @@ export default function Dashboard() {
           <div className="flex items-center justify-between px-2">
             <div className="grid gap-1">
               <h1 className="font-bold text-3xl md:text-4xl">Workspaces</h1>
-              <p className="text-lg text-slate-600">Create and manage workspaces.</p>
+              <p className="text-lg text-slate-600 dark:text-slate-300">
+                Create and manage workspaces.
+              </p>
             </div>
             <CreateWorkspaceDialog onSuccess={onSuccess} />
           </div>
@@ -40,9 +42,9 @@ export default function Dashboard() {
           ) : (
             <div className="flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50">
               <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-                <File className="h-10 w-10"></File>
+                <File className="h-10 w-10" />
                 <h2 className="mt-6 text-xl font-semibold">No workspaces created</h2>
-                <p className="mb-8 mt-2 text-center text-sm font-normal leading-6 text-muted-foreground">
+                <p className="mb-8 mt-2 text-center text-sm font-normal leading-6">
                   You don&apos;t have any workspaces yet. Create one and get planning!
                 </p>
               </div>
