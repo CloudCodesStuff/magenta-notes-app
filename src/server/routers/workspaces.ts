@@ -6,7 +6,8 @@ import { procedure, router } from '../trpc'
 import { createWorkspace } from '@/lib/services/workspaces/create'
 import { createWorkspaceSchema } from '@/lib/schemas/create-workspace'
 import { deleteWorkspace } from '@/lib/services/workspaces/delete'
-import { updateWorkspace, updateWorkspaceInput } from '@/lib/services/workspaces/update'
+import { updateWorkspace } from '@/lib/services/workspaces/update'
+import { updateWorkspaceSchema } from '@/lib/schemas/update-workspace'
 
 const workspacesRouter = router({
   /**
@@ -29,9 +30,9 @@ const workspacesRouter = router({
       return deletedWorkspace
     }),
 
-    updateWorkspace: procedure
+  updateWorkspace: procedure
     .use(isAuthenticated)
-    .input(updateWorkspaceInput)
+    .input(updateWorkspaceSchema)
     .mutation(async (opts) => {
       const updatedNote = await updateWorkspace(opts.input)
       return updatedNote
