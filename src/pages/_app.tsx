@@ -1,6 +1,7 @@
 import './globals.css'
 
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 
 import { SessionProvider } from 'next-auth/react'
 import type { Session } from 'next-auth'
@@ -16,10 +17,12 @@ const inter = Inter({ subsets: ['latin'] })
 function App({ Component, pageProps: { session, ...pageProps } }: Props) {
   return (
     <SessionProvider session={session}>
-      <Nav {...pageProps} />
-      <main className={inter.className}>
-        <Component {...pageProps} />
-      </main>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Nav {...pageProps} />
+        <main className={inter.className}>
+          <Component {...pageProps} />
+        </main>
+      </ThemeProvider>
     </SessionProvider>
   )
 }
