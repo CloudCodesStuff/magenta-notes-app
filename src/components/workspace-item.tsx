@@ -12,7 +12,7 @@ export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
         <div>
-          <Link href={`/dashboard/${workspace.id}`} className="font-semibold hover:underline">
+          <Link href={`/workspaces/${workspace.id}`} className="font-semibold hover:underline">
             {workspace.name}
           </Link>
           <p className="text-sm">{workspace.description}</p>

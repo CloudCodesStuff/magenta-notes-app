@@ -52,7 +52,7 @@ const notesRouter = router({
   /**
    * Get all notes in given workspace, Pass workspace id as input/parameter
    */
-  getNotesForCurrentWorkspace: procedure
+  getNotesForWorkspace: procedure
     .use(isAuthenticated)
     .input(z.string())
     .query(async (opts) => {
