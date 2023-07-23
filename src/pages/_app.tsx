@@ -18,10 +18,10 @@ function App({ Component, pageProps: { session, ...pageProps } }: Props) {
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Nav {...pageProps} />
-        <main className={inter.className}>
+        <div className={inter.className}>
+          <Nav {...pageProps} />
           <Component {...pageProps} />
-        </main>
+        </div>
       </ThemeProvider>
     </SessionProvider>
   )
