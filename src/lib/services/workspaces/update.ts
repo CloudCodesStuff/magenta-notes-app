@@ -1,6 +1,5 @@
 import { db } from '@/lib/db'
 import { updateWorkspaceData } from '@/lib/schemas/update-workspace'
-import { z } from 'zod'
 
 export interface updateWorkspaceForUserData extends updateWorkspaceData {
   id: string
