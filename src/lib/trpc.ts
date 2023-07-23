@@ -2,6 +2,7 @@ import transformer from 'superjson'
 import { httpBatchLink } from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import type { AppRouter } from '@/server/routers'
+import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 
 function getBaseUrl() {
   // Browser should use relative path.
@@ -51,3 +52,7 @@ export const trpc = createTRPCNext<AppRouter>({
    **/
   ssr: true,
 })
+
+export type RouterOutput = inferRouterOutputs<AppRouter>
+
+export type RouterInput = inferRouterInputs<AppRouter>

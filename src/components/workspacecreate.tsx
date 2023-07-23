@@ -21,12 +21,13 @@ import { Plus } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { createWorkspaceSchema, type CreateWorkspaceData } from '@/lib/schemas/create-workspace'
-import { trpc } from '@/lib/trpc'
-import type { Workspace } from '@prisma/client'
+import { trpc, type RouterOutput } from '@/lib/trpc'
+
+type MutationOutput = RouterOutput['workspaces']['createWorkspace']
 
 export interface CreateWorkspaceDialogProps {
   onError?: (error: unknown, variables: unknown, context: unknown) => void
-  onSuccess?: (data: Workspace, variables: unknown, context: unknown) => void
+  onSuccess?: (data: MutationOutput, variables: unknown, context: unknown) => void
 }
 
 export function CreateWorkspaceDialog(props: CreateWorkspaceDialogProps) {
