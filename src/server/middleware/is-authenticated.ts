@@ -4,7 +4,7 @@ import { middleware } from '../trpc'
 export const isAuthenticated = middleware(async (opts) => {
   const session = await opts.ctx.getSession()
 
-  if (!session?.user) {
+  if (session?.user.id == null) {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
 
