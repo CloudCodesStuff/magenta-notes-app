@@ -1,3 +1,4 @@
+import NavAvatar from './nav-avatar'
 import { Button } from './ui/button'
 import {
   NavigationMenuLink,
@@ -9,8 +10,8 @@ import {
 
 export default function Nav() {
   return (
-    <nav className="container mb-7 ">
-      <div className="flex h-16 items-center justify-between border-b border-b-slate-200 py-4">
+    <nav className="container mb-7 px-7">
+      <div className="flex h-16 items-center mx-auto justify-between border-b border-b-slate-200 py-4">
         <div className="flex gap-6 md:gap-10">
           <NavigationMenu>
             <NavigationMenuList>
@@ -35,8 +36,7 @@ export default function Nav() {
         <div className="flex gap-4">
           <div></div>
           <div className="flex gap-3">
-            <Button variant={'secondary'}>Log in</Button>
-            <Button variant={'default'}>Sign up</Button>
+            <NavAvatar></NavAvatar>
           </div>
         </div>
       </div>

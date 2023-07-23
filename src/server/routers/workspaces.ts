@@ -5,7 +5,7 @@ import { procedure, router } from '../trpc'
 import { createWorkspace } from '@/lib/services/workspaces/create'
 import { createWorkspaceSchema } from '@/lib/schemas/create-workspace'
 import { deleteWorkspace } from '@/lib/services/workspaces/delete'
-
+import { z } from 'zod'
 const workspacesRouter = router({
   /**
    * Given note information, add it to the database.
@@ -21,13 +21,10 @@ const workspacesRouter = router({
 
   deleteWorkspace: procedure
     .use(isAuthenticated)
-    .input(id)
+    .input(z.string())
     .mutation(async (opts) => {
-      const DeletedWorkspace = await deleteWorkspace({
-        ...opts.input,
-        userId: opts.ctx.session.user.id,
-      })
-      return DeletedWorkspace
+      const deletedWorkspace = await deleteWorkspace(opts.input)
+      return deletedWorkspace
     }),
 
   /**
