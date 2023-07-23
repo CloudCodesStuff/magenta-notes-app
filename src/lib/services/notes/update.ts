@@ -1,6 +1,5 @@
 import { db } from '@/lib/db'
 import { updateNoteData } from '@/lib/schemas/update-note'
-import { z } from 'zod'
 
 export interface updateNoteUserData extends updateNoteData {
   id: string
