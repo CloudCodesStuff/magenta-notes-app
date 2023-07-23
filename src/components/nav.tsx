@@ -18,7 +18,7 @@ export default function Nav() {
       <div className="flex w-full items-center mx-auto justify-between border-b border-b-slate-200 py-4">
         <div className="flex gap-6 md:gap-10">
           <NavigationMenu>
-            <NavigationMenuList>
+            <NavigationMenuList className='hidden sm:flex'>
               <NavigationMenuItem>
                 <NavigationMenuLink href="/" className={navigationMenuTriggerStyle()}>
                   Home

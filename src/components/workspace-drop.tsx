@@ -56,7 +56,7 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="flex cursor-pointer items-center text-red-600 focus:text-red-600 text-destructive focus:text-destructive"
+            className="flex cursor-pointer items-center  text-destructive focus:text-destructive"
             onSelect={() => setShowDeleteAlert(true)}
           >
             Delete
@@ -86,7 +86,7 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
                 setShowDeleteAlert(false)
                 // router.refresh()
               }}
-              className="bg-red-600 focus:ring-red-600"
+              className="bg-destructive focus:ring-destructive"
             >
               {isDeleteLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
