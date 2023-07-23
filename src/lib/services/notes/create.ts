@@ -26,7 +26,7 @@ import { db } from '@/lib/db'
 export const createNoteInput = z.object({
   color: z.string().nullish(),
   content: z.string(),
-  workspaceId: z.number(),
+  workspaceId: z.string(),
 })
 
 /**

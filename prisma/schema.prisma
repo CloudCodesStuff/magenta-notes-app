@@ -41,11 +41,11 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  notespaces    Notespace[] // Correctly referencing the Notespace model
+  workspaces    Workspace[] // Correctly referencing the Workspace model
 }
 
-model Notespace {
-  id          Int      @id @default(autoincrement())
+model Workspace {
+  id          String   @id @default(cuid())
   name        String
   description String?
   notes       Note[]
@@ -64,11 +64,11 @@ model VerificationToken {
 }
 
 model Note {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(cuid())
   color       String?
   content     Json
-  workspace   Notespace @relation(fields: [workspaceId], references: [id])
-  workspaceId Int
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
