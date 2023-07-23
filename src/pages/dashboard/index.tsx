@@ -1,7 +1,12 @@
-import WorkspaceCreate from '@/components/workspacecreate'
+import {
+  CreateWorkspaceDialog,
+  type CreateWorkspaceDialogProps,
+} from '@/components/workspacecreate'
 import { WorkspaceItem } from '@/components/workspaceitem'
 import { trpc } from '@/lib/trpc'
 import { File } from 'lucide-react'
+import { useRouter } from 'next/router'
+import { useCallback } from 'react'
 
 export const metadata = {
   title: 'Dashboard',
@@ -9,6 +14,15 @@ export const metadata = {
 
 export default function Dashboard() {
   const workspaces = trpc.workspaces.getWorkspacesForCurrentUser.useQuery()
+
+  const router = useRouter()
+
+  const onSuccess = useCallback(
+    (async (data) => {
+      router.push(`/dashboard/${data.id}`)
+    }) satisfies CreateWorkspaceDialogProps['onSuccess'],
+    [],
+  )
 
   return (
     <div className="w-full">
@@ -19,7 +33,7 @@ export default function Dashboard() {
               <h1 className="font-bold text-3xl md:text-4xl">Workspaces</h1>
               <p className="text-lg text-slate-600">Create and manage workspaces.</p>
             </div>
-            <WorkspaceCreate />
+            <CreateWorkspaceDialog onSuccess={onSuccess} />
           </div>
           {workspaces.data?.length ? (
             <div className="divide-y divide-border rounded-md border">

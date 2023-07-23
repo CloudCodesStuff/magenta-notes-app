@@ -22,8 +22,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { createWorkspaceSchema, type CreateWorkspaceData } from '@/lib/schemas/create-workspace'
 import { trpc } from '@/lib/trpc'
+import type { Workspace } from '@prisma/client'
 
-export default function WorkspaceCreate() {
+export interface CreateWorkspaceDialogProps {
+  onError?: (error: unknown, variables: unknown, context: unknown) => void
+  onSuccess?: (data: Workspace, variables: unknown, context: unknown) => void
+}
+
+export function CreateWorkspaceDialog(props: CreateWorkspaceDialogProps) {
   const form = useForm<CreateWorkspaceData>({
     resolver: zodResolver(createWorkspaceSchema),
     defaultValues: {
@@ -35,16 +41,10 @@ export default function WorkspaceCreate() {
   const mutation = trpc.workspaces.createWorkspace.useMutation()
 
   const onSubmit = form.handleSubmit(async (data) => {
-    const result = await mutation.mutateAsync(data).catch((error) => {
-      console.log(error)
-      return null
+    mutation.mutate(data, {
+      onSuccess: props.onSuccess,
+      onError: props.onError,
     })
-
-    if (!result) {
-      console.log('error')
-    } else {
-      console.log('success')
-    }
   })
 
   return (
