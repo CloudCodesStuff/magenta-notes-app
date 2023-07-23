@@ -23,7 +23,7 @@ export async function defaultTools() {
     inlineCode: InlineCode,
     table: Table,
     embed: Embed,
-  }
+  } satisfies Record<string, EditorJS.ToolConstructable | EditorJS.ToolSettings>
 }
 
 /**
@@ -39,7 +39,7 @@ export function useEditor(props: EditorProps, ref: React.MutableRefObject<HTMLEl
    */
   const editorConfig = useRef({
     content: props.content,
-    tools: props.tools,
+    tools: props.tools ?? defaultTools,
   })
 
   /**
@@ -54,8 +54,8 @@ export function useEditor(props: EditorProps, ref: React.MutableRefObject<HTMLEl
 
     editorRef.current ??= new EditorJS({
       holder: ref.current,
-      placeholder: 'Type here to write your post...',
       inlineToolbar: true,
+      placeholder: 'Type here to write your post...',
       data: editorConfig.current.content,
       tools: await editorConfig.current.tools?.(),
     })
