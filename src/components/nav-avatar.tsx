@@ -42,6 +42,9 @@ export default function NavAvatar() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuItem asChild>
+          <Link href="/workspaces">Workspaces</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href="/dashboard">Dashboard</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator></DropdownMenuSeparator>
