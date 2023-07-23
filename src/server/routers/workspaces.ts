@@ -1,3 +1,4 @@
+import { z } from 'zod'
 import { getUserWorkspaces } from '@/lib/services/workspaces/get-for-user'
 import { getAllWorkspaces } from '@/lib/services/workspaces/get-all'
 import { isAuthenticated } from '../middleware/is-authenticated'
@@ -21,13 +22,10 @@ const workspacesRouter = router({
 
   deleteWorkspace: procedure
     .use(isAuthenticated)
-    .input(id)
+    .input(z.string())
     .mutation(async (opts) => {
-      const DeletedWorkspace = await deleteWorkspace({
-        ...opts.input,
-        userId: opts.ctx.session.user.id,
-      })
-      return DeletedWorkspace
+      const deletedWorkspace = await deleteWorkspace(opts.input)
+      return deletedWorkspace
     }),
 
   /**

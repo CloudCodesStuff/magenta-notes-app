@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
 import {
@@ -24,16 +24,12 @@ export default function NavAvatar() {
 
   const initials = useMemo(() => getInitials(session?.user.name ?? ''), [session])
 
-  if (!session) {
-    return <Button onClick={() => signIn()}>Sign in</Button>
-  }
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={session.user.image ?? ''} alt={session.user.name ?? ''} />
+            <AvatarImage src={session?.user.image ?? ''} alt={session?.user.name ?? ''} />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>
@@ -41,8 +37,8 @@ export default function NavAvatar() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{session.user.name}</p>
-            <p className="text-xs leading-none text-muted-foreground">{session.user.email}</p>
+            <p className="text-sm font-medium leading-none">{session?.user.name}</p>
+            <p className="text-xs leading-none text-muted-foreground">{session?.user.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuItem asChild>
