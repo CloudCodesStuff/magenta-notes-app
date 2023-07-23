@@ -1,4 +1,3 @@
-
 import { useSession, signIn } from 'next-auth/react'
 import NavAvatar from './nav-avatar'
 
@@ -10,6 +9,7 @@ import {
   NavigationMenuItem,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
+import ThemeToggle from './theme-toggle'
 
 export default function Nav() {
   const { data: session } = useSession()

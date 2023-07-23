@@ -6,7 +6,6 @@ import { WorkspaceItem } from '@/components/workspace-item'
 import { trpc } from '@/lib/trpc'
 import { File } from 'lucide-react'
 import { useRouter } from 'next/router'
-import { useCallback } from 'react'
 
 export const metadata = {
   title: 'Dashboard',
@@ -17,12 +16,9 @@ export default function Dashboard() {
 
   const router = useRouter()
 
-  const onSuccess = useCallback(
-    (async (data) => {
-      router.push(`/dashboard/${data.id}`)
-    }) satisfies CreateWorkspaceDialogProps['onSuccess'],
-    [],
-  )
+  const onSuccess: CreateWorkspaceDialogProps['onSuccess'] = async (data) => {
+    router.push(`/dashboard/${data.id}`)
+  }
 
   return (
     <div className="w-full">
