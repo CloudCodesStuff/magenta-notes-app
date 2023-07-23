@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Workspace } from '@prisma/client'
 import { formatDate } from '@/lib/formatdate'
+import { DeleteWorkspace } from './workspacedrop'
 
 interface WorkspaceItemProps {
   workspace: Pick<Workspace, 'id' | 'name' | 'description' | 'userId' | 'createdAt' | 'updatedAt'>
@@ -22,6 +23,7 @@ export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
           </p>
         </div>
       </div>
+      <DeleteWorkspace workspace={workspace}></DeleteWorkspace>
     </div>
   )
 }

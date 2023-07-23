@@ -82,9 +82,11 @@ export function CreateWorkspaceDialog(props: CreateWorkspaceDialogProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
+
                   <FormDescription>
                     (Optional) Additional information about your workspace.
                   </FormDescription>
+
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

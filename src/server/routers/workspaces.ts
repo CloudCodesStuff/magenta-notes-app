@@ -6,7 +6,7 @@ import { procedure, router } from '../trpc'
 import { createWorkspace } from '@/lib/services/workspaces/create'
 import { createWorkspaceSchema } from '@/lib/schemas/create-workspace'
 import { deleteWorkspace } from '@/lib/services/workspaces/delete'
-
+import { z } from 'zod'
 const workspacesRouter = router({
   /**
    * Given note information, add it to the database.
