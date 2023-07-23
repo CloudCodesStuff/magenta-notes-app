@@ -5,20 +5,18 @@ import { procedure, router } from '../trpc'
 import { createWorkspace } from '@/lib/services/workspaces/create'
 import { createWorkspaceSchema } from '@/lib/schemas/create-workspace'
 
-/**
- * @example User ID to get workspaces for.
- */
-// const userId = 'clkdjnxlk0000l608hsj9jxb2'
-
 const workspacesRouter = router({
   /**
    * Given note information, add it to the database.
    * @returns Creates the new workspace in database
    */
-  createWorkspace: procedure.input(createWorkspaceSchema).mutation(async (opts) => {
-    const workspace = await createWorkspace(opts.input)
-    return workspace
-  }),
+  createWorkspace: procedure
+    .use(isAuthenticated)
+    .input(createWorkspaceSchema)
+    .mutation(async (opts) => {
+      const workspace = await createWorkspace({ ...opts.input, userId: opts.ctx.session.user.id })
+      return workspace
+    }),
 
   /**
    * Get all workspaces in the database.
@@ -33,7 +31,6 @@ const workspacesRouter = router({
    */
   getWorkspacesForCurrentUser: procedure.use(isAuthenticated).query(async (opts) => {
     const workspaces = getUserWorkspaces(opts.ctx.session.user.id)
-    console.log(opts.ctx.session.user.id)
     return workspaces
   }),
 })
