@@ -7,7 +7,7 @@ import { db } from '@/lib/db'
 export async function getUserWorkspaces(userId: string) {
   const ClientWorkspaces = await db.workspace.findMany({
     where: {
-      userId: userId,
+      userId,
     },
     select: {
       id: true,

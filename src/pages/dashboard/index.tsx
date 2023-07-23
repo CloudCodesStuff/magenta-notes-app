@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import WorkspaceCreate from '@/components/workspacecreate'
 import { WorkspaceItem } from '@/components/workspaceitem'
 import { trpc } from '@/lib/trpc'
 import { File, Plus } from 'lucide-react'
@@ -22,10 +23,7 @@ export default function Dashboard() {
                 Create and manage workspaces.
               </p>
             </div>
-            <Button>
-              <Plus className='mr-2 h-4 w-4'></Plus>
-              New Workspace
-            </Button>
+            <WorkspaceCreate />
           </div>
           {workspaces.data?.length ? (
             <div className="divide-y divide-border rounded-md border">
