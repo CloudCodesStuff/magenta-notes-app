@@ -23,6 +23,7 @@ import {
 import { Loader2, MoreVertical, Trash2 } from 'lucide-react'
 import { Workspace } from '@prisma/client'
 import { trpc, type RouterOutput } from '@/lib/trpc'
+import { useToast } from './ui/use-toast'
 
 type MutationOutput = RouterOutput['workspaces']['deleteWorkspace']
 export interface CreateWorkspaceDialogProps {
@@ -40,6 +41,7 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
 
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
+  const { toast } = useToast()
 
   return (
     <>
@@ -56,7 +58,7 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="flex cursor-pointer items-center text-red-600 focus:text-red-600 text-destructive focus:text-destructive"
+            className="flex cursor-pointer items-center  text-destructive focus:text-destructive"
             onSelect={() => setShowDeleteAlert(true)}
           >
             Delete
@@ -79,14 +81,23 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
                 mutation.mutate(workspace.id, {
                   onSuccess() {
                     utils.workspaces.getWorkspacesForCurrentUser.invalidate()
+                    toast({
+                      title: "Workspace succesfully deleted.",
+                    })
                   },
+                  onError() {
+                    toast({
+                      variant: "destructive",
+                      title: "Uh oh! Something went wrong.",
+                      description: "There was a problem with your request.",
+                    })
+                  }
                 })
-                console.log('dytf')
                 setIsDeleteLoading(false)
                 setShowDeleteAlert(false)
                 // router.refresh()
               }}
-              className="bg-red-600 focus:ring-red-600"
+              className="bg-destructive focus:ring-destructive"
             >
               {isDeleteLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

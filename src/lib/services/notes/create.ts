@@ -24,9 +24,14 @@ import { db } from '@/lib/db'
  * {@link procedure.input} will invoke the `parse` method automatically, giving you a type-safe input.
  */
 export const createNoteInput = z.object({
-  color: z.string().nullish(),
-  content: z.string(),
   workspaceId: z.string(),
+  title: z.string(),
+  /**
+   * Content can be any JSON object or string.
+   */
+  content: z.object({}).passthrough().or(z.string()),
+
+  color: z.string().nullish(),
 })
 
 /**

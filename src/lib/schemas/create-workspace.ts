@@ -11,14 +11,10 @@ export const createWorkspaceSchema = z.object({
     }),
   description: z
     .string()
-    .min(2, {
-      message: 'Description must be at least 2 characters.',
-    })
     .max(50, {
       message: 'Description must be less than 50 characters.',
     })
     .optional(),
-
 })
 
 export type CreateWorkspaceData = z.infer<typeof createWorkspaceSchema>

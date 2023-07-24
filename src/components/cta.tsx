@@ -30,7 +30,7 @@ export default function Cta() {
             <br />
             Start using app name here today.
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-800">
+          <p className="mt-6 text-lg leading-8 text-gray-800 dark:text-gray-200">
             Lorem sed repudiandae accusamus porro ea molestias? Illum dicta porro aut aperiam nihil
             Qui officia nam voluptate architecto voluptatum numquam impedit Vel et quis praesentium
           </p>

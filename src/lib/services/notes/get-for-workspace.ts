@@ -5,7 +5,6 @@ import { db } from '@/lib/db'
  * @param workspaceId workspaces's id
  */
 
-
 export async function getWorkspaceNotes(workspaceId: string) {
   const allNotes = await db.note.findMany({
     where: {
@@ -13,9 +12,11 @@ export async function getWorkspaceNotes(workspaceId: string) {
     },
     select: {
       id: true,
+      title: true,
       color: true,
       content: true,
       createdAt: true,
+      updatedAt: true,
     },
     orderBy: {
       updatedAt: 'desc',

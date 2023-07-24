@@ -25,7 +25,7 @@ export default function Page() {
 
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="prose prose-stone mx-auto w-[800px]">
+      <div className="prose prose-stone dark:prose-invert mx-auto w-[800px]">
         <div ref={ref} className="min-h-[500px]" />
 
         <p className="text-sm text-gray-500">
