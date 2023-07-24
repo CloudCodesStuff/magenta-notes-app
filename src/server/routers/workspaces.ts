@@ -8,6 +8,7 @@ import { createWorkspaceSchema } from '@/lib/schemas/create-workspace'
 import { deleteWorkspace } from '@/lib/services/workspaces/delete'
 import { updateWorkspace } from '@/lib/services/workspaces/update'
 import { updateWorkspaceSchema } from '@/lib/schemas/update-workspace'
+import { getStarredWorkspaceforUser } from '@/lib/services/starred-workspace/get-for-user'
 
 const workspacesRouter = router({
   /**
@@ -52,6 +53,11 @@ const workspacesRouter = router({
     const workspaces = getUserWorkspaces(opts.ctx.session.user.id)
     return workspaces
   }),
+
+  getStarredWorkspacesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+    const starredWorkspaces = getStarredWorkspaceforUser(opts.ctx.session.user.id)
+    return starredWorkspaces
+  })
 })
 
 export default workspacesRouter
