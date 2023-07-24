@@ -9,7 +9,8 @@ interface NoteItemProps {
 
 export function NoteItem({ note }: NoteItemProps) {
     return (
-        <Card>
+        <Card className='w-60 relative flex flex-col justify-start'>
+            <div className='flex'><h1></h1></div>
 
         </Card>
 

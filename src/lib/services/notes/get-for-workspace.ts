@@ -12,6 +12,7 @@ export async function getWorkspaceNotes(workspaceId: string) {
     },
     select: {
       id: true,
+      title: true,
       color: true,
       content: true,
       createdAt: true,

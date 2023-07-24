@@ -25,6 +25,7 @@ import { db } from '@/lib/db'
  */
 export const createNoteInput = z.object({
   workspaceId: z.string(),
+  title: z.string(),
   /**
    * Content can be any JSON object or string.
    */
