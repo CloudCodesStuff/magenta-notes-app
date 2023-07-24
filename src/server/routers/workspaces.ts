@@ -1,13 +1,14 @@
 import { z } from 'zod'
 import { getUserWorkspaces } from '@/lib/services/workspaces/get-for-user'
 import { getAllWorkspaces } from '@/lib/services/workspaces/get-all'
-import { isAuthenticated } from '../middleware/is-authenticated'
-import { procedure, router } from '../trpc'
 import { createWorkspace } from '@/lib/services/workspaces/create'
 import { createWorkspaceSchema } from '@/lib/schemas/create-workspace'
 import { deleteWorkspace } from '@/lib/services/workspaces/delete'
 import { updateWorkspace } from '@/lib/services/workspaces/update'
 import { updateWorkspaceSchema } from '@/lib/schemas/update-workspace'
+import { getStarredWorkspaceforUser } from '@/lib/services/starred-workspace/get-for-user'
+import { isAuthenticated } from '../middleware/is-authenticated'
+import { procedure, router } from '../trpc'
 
 const workspacesRouter = router({
   /**
@@ -51,6 +52,11 @@ const workspacesRouter = router({
   getWorkspacesForCurrentUser: procedure.use(isAuthenticated).query(async (opts) => {
     const workspaces = getUserWorkspaces(opts.ctx.session.user.id)
     return workspaces
+  }),
+
+  getStarredWorkspacesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+    const starredWorkspaces = getStarredWorkspaceforUser(opts.ctx.session.user.id)
+    return starredWorkspaces
   }),
 })
 

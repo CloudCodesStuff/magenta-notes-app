@@ -1,10 +1,7 @@
-import { NoteItem } from '@/components/noteitem'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
-import { formatDate } from '@/lib/formatdate'
-import { trpc } from '@/lib/trpc'
-import { useRouter } from 'next/router'
 import { useMemo } from 'react'
+import { useRouter } from 'next/router'
+import { trpc } from '@/lib/trpc'
+import NoteItem from '@/components/note-item'
 
 export const metadata = {
   title: 'Workspace',
@@ -26,7 +23,7 @@ export default function Page() {
   const mutation = trpc.notes.createNote.useMutation()
 
   const handleClick = async () => {
-    console.log("test")
+    console.log('test')
     mutation.mutate(
       { workspaceId, content: 'Edit note here', title: 'Test title' },
       {
@@ -41,7 +38,6 @@ export default function Page() {
     <div className="w-full">
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
         <div className="grid items-start gap-8">
-
           <button onClick={handleClick} className="bg-red-400 p-2 rounded">
             Add New Note
           </button>
