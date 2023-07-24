@@ -95,21 +95,19 @@ model Note {
 }
 
 model StarredWorkspace {
-  id          String    @id @default(cuid())
   userId      String
-  workspaceId String
-  starredAt   DateTime  @default(now())
   user        User      @relation(fields: [userId], references: [id])
+  workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
-  updatedAt   DateTime  @updatedAt
+
+  @@id([userId, workspaceId])
 }
 
 model StarredNote {
-  id        String   @id @default(cuid())
   userId    String
-  noteId    String
-  starredAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+  noteId    String
   note      Note     @relation(fields: [noteId], references: [id])
-  updatedAt DateTime @updatedAt
+
+  @@id([userId, noteId])
 }

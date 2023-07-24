@@ -1,19 +1,13 @@
+import { z } from 'zod'
 import { updateNoteSchema } from '@/lib/schemas/update-note'
-import { isAuthenticated } from '../middleware/is-authenticated'
-import { procedure, router } from '../trpc'
 import { createNote, createNoteInput } from '@/lib/services/notes/create'
 import { deleteNote } from '@/lib/services/notes/delete'
 import { getAllNotes } from '@/lib/services/notes/get-all'
 import { getWorkspaceNotes } from '@/lib/services/notes/get-for-workspace'
 import { updateNote } from '@/lib/services/notes/update'
-import { z } from 'zod'
 import { getStarredNotesforUser } from '@/lib/services/starred-note/get-for-user'
-
-/**
- * @example User ID to get workspaces for.
- */
-
-const userId = 'clkgpzfms0000hpc0tivlb00g'
+import { isAuthenticated } from '../middleware/is-authenticated'
+import { procedure, router } from '../trpc'
 
 const notesRouter = router({
   /**
@@ -64,11 +58,6 @@ const notesRouter = router({
 
   getStarredNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
     const starredNotes = getStarredNotesforUser(opts.ctx.session.user.id)
-    return starredNotes
-  }),
-
-  testgetStarredNotesForUser: procedure.use(isAuthenticated).query(async () => {
-    const starredNotes = getStarredNotesforUser(userId)
     return starredNotes
   }),
 })

@@ -11,11 +11,6 @@ export async function getStarredNotesforUser(userId: string) {
     },
     select: {
       note: true,
-      starredAt: true,
-      updatedAt: true,
-    },
-    orderBy: {
-      updatedAt: 'desc',
     },
   })
 

@@ -11,11 +11,6 @@ export async function getStarredWorkspaceforUser(userId: string) {
     },
     select: {
       workspace: true,
-      starredAt: true,
-      updatedAt: true,
-    },
-    orderBy: {
-      updatedAt: 'desc',
     },
   })
 
