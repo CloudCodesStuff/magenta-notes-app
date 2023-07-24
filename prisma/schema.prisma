@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -44,6 +44,7 @@ model User {
   workspaces        Workspace[]
   Collaborators     Collaborators[]
   starredWorkspaces StarredWorkspace[]
+  starredNotes      StarredNote[]
 }
 
 model VerificationToken {
@@ -80,14 +81,15 @@ model Workspace {
 }
 
 model Note {
-  id          String    @id @default(cuid())
-  color       String?
-  title       String
-  content     Json
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
-  workspaceId String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             String        @id @default(cuid())
+  color          String?
+  title          String
+  content        Json
+  workspace      Workspace     @relation(fields: [workspaceId], references: [id])
+  workspaceId    String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  starredByUsers StarredNote[]
 
   @@index([id])
 }
@@ -99,6 +101,15 @@ model StarredWorkspace {
   starredAt   DateTime  @default(now())
   user        User      @relation(fields: [userId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
-  createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model StarredNote {
+  id        String   @id @default(cuid())
+  userId    String
+  noteId    String
+  starredAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  note      Note     @relation(fields: [noteId], references: [id])
+  updatedAt DateTime @updatedAt
 }

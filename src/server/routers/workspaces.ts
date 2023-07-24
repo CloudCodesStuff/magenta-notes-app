@@ -10,6 +10,8 @@ import { updateWorkspace } from '@/lib/services/workspaces/update'
 import { updateWorkspaceSchema } from '@/lib/schemas/update-workspace'
 import { getStarredWorkspaceforUser } from '@/lib/services/starred-workspace/get-for-user'
 
+const userId = 'clkgpzfms0000hpc0tivlb00g'
+
 const workspacesRouter = router({
   /**
    * Given note information, add it to the database.
@@ -57,7 +59,12 @@ const workspacesRouter = router({
   getStarredWorkspacesForUser: procedure.use(isAuthenticated).query(async (opts) => {
     const starredWorkspaces = getStarredWorkspaceforUser(opts.ctx.session.user.id)
     return starredWorkspaces
-  })
+  }),
+
+  testgetStarredWorkspacesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+    const starredWorkspaces = getStarredWorkspaceforUser(userId)
+    return starredWorkspaces
+  }),
 })
 
 export default workspacesRouter

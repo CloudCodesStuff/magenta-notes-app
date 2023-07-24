@@ -1,7 +1,7 @@
 import { db } from '@/lib/db'
 
 /**
- * Find all workspaces for a specific user.
+ * Find all Starred workspaces for a specific user.
  * @param userId The user's ID.
  */
 export async function getStarredWorkspaceforUser(userId: string) {
@@ -11,7 +11,7 @@ export async function getStarredWorkspaceforUser(userId: string) {
     },
     select: {
       workspace: true,
-      createdAt: true,
+      starredAt: true,
       updatedAt: true,
     },
     orderBy: {

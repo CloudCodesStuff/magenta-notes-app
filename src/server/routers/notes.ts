@@ -7,11 +7,13 @@ import { getAllNotes } from '@/lib/services/notes/get-all'
 import { getWorkspaceNotes } from '@/lib/services/notes/get-for-workspace'
 import { updateNote } from '@/lib/services/notes/update'
 import { z } from 'zod'
+import { getStarredNotesforUser } from '@/lib/services/starred-note/get-for-user'
 
 /**
  * @example User ID to get workspaces for.
  */
-// const userId = 'clkdjnxlk0000l608hsj9jxb2'
+
+const userId = 'clkgpzfms0000hpc0tivlb00g'
 
 const notesRouter = router({
   /**
@@ -59,6 +61,16 @@ const notesRouter = router({
       const notes = getWorkspaceNotes(opts.input)
       return notes
     }),
+
+  getStarredNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+    const starredNotes = getStarredNotesforUser(opts.ctx.session.user.id)
+    return starredNotes
+  }),
+
+  testgetStarredNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+    const starredNotes = getStarredNotesforUser(userId)
+    return starredNotes
+  }),
 })
 
 export default notesRouter
