@@ -61,7 +61,7 @@ const workspacesRouter = router({
     return starredWorkspaces
   }),
 
-  testgetStarredWorkspacesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+  testgetStarredWorkspacesForUser: procedure.use(isAuthenticated).query(async () => {
     const starredWorkspaces = getStarredWorkspaceforUser(userId)
     return starredWorkspaces
   }),

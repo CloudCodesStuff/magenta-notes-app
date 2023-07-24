@@ -67,7 +67,7 @@ const notesRouter = router({
     return starredNotes
   }),
 
-  testgetStarredNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+  testgetStarredNotesForUser: procedure.use(isAuthenticated).query(async () => {
     const starredNotes = getStarredNotesforUser(userId)
     return starredNotes
   }),
