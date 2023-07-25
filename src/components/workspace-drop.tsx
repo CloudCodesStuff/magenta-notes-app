@@ -82,16 +82,16 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
                   onSuccess() {
                     utils.workspaces.getWorkspacesForCurrentUser.invalidate()
                     toast({
-                      title: "Workspace succesfully deleted.",
+                      title: 'Workspace succesfully deleted.',
                     })
                   },
                   onError() {
                     toast({
-                      variant: "destructive",
-                      title: "Uh oh! Something went wrong.",
-                      description: "There was a problem with your request.",
+                      variant: 'destructive',
+                      title: 'Uh oh! Something went wrong.',
+                      description: 'There was a problem with your request.',
                     })
-                  }
+                  },
                 })
                 setIsDeleteLoading(false)
                 setShowDeleteAlert(false)

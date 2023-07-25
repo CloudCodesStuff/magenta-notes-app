@@ -41,18 +41,23 @@ export default function NavAvatar() {
             <p className="text-xs leading-none text-muted-foreground">{session?.user.email}</p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuItem className='cursor-pointer' asChild>
+        <DropdownMenuItem className="cursor-pointer" asChild>
           <Link href="/">Home</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className='cursor-pointer' asChild>
+        <DropdownMenuItem className="cursor-pointer" asChild>
           <Link href="/workspaces">Workspaces</Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem className='cursor-pointer' asChild>
+        <DropdownMenuItem className="cursor-pointer" asChild>
           <Link href="/editor ">Editor</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator></DropdownMenuSeparator>
-        <DropdownMenuItem className='text-red-600 focus:text-red-600 cursor-pointer' onClick={() => signOut()}>Log out</DropdownMenuItem>
+        <DropdownMenuItem
+          className="text-red-600 focus:text-red-600 cursor-pointer"
+          onClick={() => signOut()}
+        >
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

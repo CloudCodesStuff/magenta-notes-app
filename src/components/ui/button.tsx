@@ -8,28 +8,23 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          'bg-slate-900 text-slate-50 hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90',
-        destructive:
-          'bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-red-50 dark:hover:bg-red-900/90',
-        outline:
-          'border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50',
-        secondary:
-          'bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80',
-        ghost:
-          'hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50',
-        link: 'text-slate-900 underline-offset-4 hover:underline dark:text-slate-50',
+        primary: 'bg-primary-500 text-on-primary-token hover:bg-primary-600',
+        secondary: 'bg-secondary-500 text-on-secondary-token hover:bg-secondary-600',
+        tertiary: 'bg-tertiary-500 text-on-tertiary-token hover:bg-tertiary-600',
+        error: 'bg-error-500 text-on-error-token hover:bg-error-600',
+        ghost: 'hover:bg-primary-500 hover:text-on-primary-token',
+        link: 'hover:underline underline-offset-4',
       },
       size: {
-        default: 'h-10 px-4 py-2',
         sm: 'h-9 rounded-md px-3',
+        md: 'h-10 px-4 py-2',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: 'primary',
+      size: 'md',
     },
   },
 )

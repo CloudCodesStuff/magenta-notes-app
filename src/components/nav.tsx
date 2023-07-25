@@ -14,11 +14,11 @@ export default function Nav() {
   const { data: session } = useSession()
 
   return (
-    <nav className="mb-7 px-7">
+    <nav className="px-7 bg-surface-100-800-token">
       <div className="flex w-full items-center mx-auto justify-between border-b border-b-slate-200 py-4">
         <div className="flex gap-6 md:gap-10">
           <NavigationMenu>
-            <NavigationMenuList className='hidden sm:flex'>
+            <NavigationMenuList className="hidden sm:flex">
               <NavigationMenuItem>
                 <NavigationMenuLink href="/" className={navigationMenuTriggerStyle()}>
                   Home
@@ -46,12 +46,10 @@ export default function Nav() {
               <NavAvatar />
             ) : (
               <>
-                <Button onClick={() => signIn()} variant={'secondary'}>
+                <Button onClick={() => signIn()} variant="secondary">
                   Log in
                 </Button>
-                <Button onClick={() => signIn()} variant={'default'}>
-                  Sign up
-                </Button>
+                <Button onClick={() => signIn()}>Sign up</Button>
               </>
             )}
           </div>
