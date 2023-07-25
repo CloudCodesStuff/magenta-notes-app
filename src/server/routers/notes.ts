@@ -8,6 +8,7 @@ import { updateNote } from '@/lib/services/notes/update'
 import { getStarredNotesforUser } from '@/lib/services/starred-note/get-for-user'
 import { isAuthenticated } from '../middleware/is-authenticated'
 import { procedure, router } from '../trpc'
+import { getRecentNotesForUser } from '@/lib/services/notes/get-recent-for-user'
 
 const notesRouter = router({
   /**
@@ -59,6 +60,11 @@ const notesRouter = router({
   getStarredNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
     const starredNotes = getStarredNotesforUser(opts.ctx.session.user.id)
     return starredNotes
+  }),
+
+  getRecentNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
+    const recentNotes = getRecentNotesForUser(opts.ctx.session.user.id)
+    return recentNotes
   }),
 })
 
