@@ -25,7 +25,7 @@ export default function Page() {
   const handleClick = async () => {
     console.log('test')
     mutation.mutate(
-      { workspaceId, content: 'Edit note here', title: 'Test title' },
+      { workspaceId, content: 'Edit note here', title: 'Test title purple', color: 'purple' },
       {
         onSuccess(data) {
           router.push(`/workspaces/notes/${data.id}`)
@@ -43,7 +43,7 @@ export default function Page() {
           </button>
           <div>
             {notes.data?.length ? (
-              <div className="divide-y divide-border rounded-md border">
+              <div className="divide-y p-4 flex gap-2 flex-wrap dotted divide-border rounded-md border">
                 {notes.data.map((note) => (
                   <NoteItem key={note.id} note={note} />
                 ))}

@@ -8,7 +8,7 @@
     --foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: #7f8ea3;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
@@ -40,7 +40,7 @@
     --foreground: 213 31% 91%;
 
     --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
+    --muted-foreground: #7f8ea3;
 
     --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
@@ -67,4 +67,9 @@
 
     --radius: 0.5rem;
   }
+}
+
+.dotted{
+  background-image: radial-gradient(circle at 1px 1px,  var(--muted-foreground) 1px, transparent 0);
+  background-size: 40px 40px;
 }

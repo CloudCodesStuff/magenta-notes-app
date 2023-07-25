@@ -34,7 +34,7 @@ export default function Page() {
             <CreateWorkspaceDialog onSuccess={onSuccess} />
           </div>
           {workspaces.data?.length ? (
-            <div className="divide-y divide-border rounded-md border">
+            <div className="divide-y divide-border  rounded-md border">
               {workspaces.data.map((workspace) => (
                 <WorkspaceItem key={workspace.id} workspace={workspace} />
               ))}
