@@ -15,7 +15,6 @@
  */
 @layer base {
   :root {
-
     /* Skeleton UI theme */
 
     /* =~= Theme Properties =~= */
@@ -113,9 +112,7 @@
     --color-surface-800: 69 44 44; /* ⬅ #452c2c */
     --color-surface-900: 56 36 36; /* ⬅ #382424 */
 
-
     /* From Taxonomy */
-
 
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
