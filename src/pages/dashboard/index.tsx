@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { Home, History, Star, Clipboard, Check } from 'lucide-react'
-// import { trpc } from '@/lib/trpc'
+import { trpc } from '@/lib/trpc'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Card,
@@ -28,9 +28,9 @@ const tabs = [
 export default function Dashboard() {
   const { data: session } = useSession()
 
-  // const workspacesQuery = trpc.workspaces.getWorkspacesForCurrentUser.useQuery()
-
-  // const notesQuery = trpc.notes.getRecentNotesForUser.useQuery()
+  const workspacesQuery = trpc.workspaces.getWorkspacesForCurrentUser.useQuery()
+  const notesQuery = trpc.notes.getRecentNotesForUser.useQuery()
+  const teamsQuery = trpc.teams.getCurrentUserTeams.useQuery()
 
   if (!session) {
     return <div>You must be signed in</div>
@@ -77,33 +77,50 @@ export default function Dashboard() {
             </CardHeader>
 
             <CardContent>
-              <p>Card Content</p>
+              {!notesQuery.data?.length && <h3 className="text-center">No Notes Yet!</h3>}
+              <div className="flex flex-col gap-4">
+                {notesQuery.data?.map((note) => (
+                  <div key={note.id} className="border rounded p-2">
+                    <div>ID: {note.id}</div>
+                    <div>Title: {note.title}</div>
+                    <div>Content: {note.content?.toString()}</div>
+                  </div>
+                ))}
+              </div>
             </CardContent>
-
-            <CardFooter>
-              <p>Card Footer</p>
-            </CardFooter>
           </Card>
         </div>
 
         <div className="col-span-1 flex flex-col gap-4">
           <Card>
             <CardHeader>
-              <CardTitle className="flex flex-wrap gap-2 justify-between items-center">
-                <span>Workspaces</span>
-                <Button size="xs" asChild>
-                  <Link href="/workspaces">See all</Link>
-                </Button>
-              </CardTitle>
+              <CardTitle>Workspaces</CardTitle>
               <div className="border" />
             </CardHeader>
 
             <CardContent>
-              <p>Card Content</p>
+              {!workspacesQuery.data?.length && <h3 className="text-center">No Workspaces Yet!</h3>}
+              <div className="flex flex-col gap-4">
+                {workspacesQuery.data?.map((workspace) => (
+                  <div key={workspace.id} className="border p-2 rounded">
+                    <div>ID: {workspace.id}</div>
+                    <div>Name: {workspace.name}</div>
+                    <div>Description: {workspace.description}</div>
+                  </div>
+                ))}
+              </div>
             </CardContent>
 
             <CardFooter>
-              <p>Card Footer</p>
+              {workspacesQuery.data?.length ? (
+                <Button asChild className="w-full">
+                  <Link href="/workspaces">View All</Link>
+                </Button>
+              ) : (
+                <Button asChild className="w-full">
+                  <Link href="/workspaces">Create a Workspace</Link>
+                </Button>
+              )}
             </CardFooter>
           </Card>
 
@@ -112,11 +129,30 @@ export default function Dashboard() {
               <CardTitle>Teams</CardTitle>
               <div className="border" />
             </CardHeader>
+
             <CardContent>
-              <p>Card Content</p>
+              {!teamsQuery.data?.length && <h3 className="text-center">No Teams Yet!</h3>}
+              <div className="flex flex-col gap-4">
+                {teamsQuery.data?.map((team) => (
+                  <div key={team.id} className="border p-2 rounded">
+                    <div>ID: {team.id}</div>
+                    <div>Name: {team.name}</div>
+                    <div>Description: {team.description}</div>
+                  </div>
+                ))}
+              </div>
             </CardContent>
+
             <CardFooter>
-              <p>Card Footer</p>
+              {teamsQuery.data?.length ? (
+                <Button variant="secondary" asChild className="w-full">
+                  <Link href="/teams">View All</Link>
+                </Button>
+              ) : (
+                <Button variant="secondary" asChild className="w-full">
+                  <Link href="/teams">Create a Team</Link>
+                </Button>
+              )}
             </CardFooter>
           </Card>
         </div>

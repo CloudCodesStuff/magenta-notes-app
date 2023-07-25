@@ -6,18 +6,16 @@ import { db } from '@/lib/db'
 export async function getRecentNotesForUser(userId: string) {
   const allNotes = await db.note.findMany({
     where: {
-      collaborators: {
-        some: {
-          userId,
+      OR: [
+        { userId },
+        {
+          collaborators: {
+            some: {
+              userId,
+            },
+          },
         },
-      },
-    },
-    select: {
-      id: true,
-      color: true,
-      content: true,
-      workspace: true,
-      createdAt: true,
+      ],
     },
     orderBy: {
       updatedAt: 'desc',

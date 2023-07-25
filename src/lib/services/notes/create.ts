@@ -25,7 +25,9 @@ import { db } from '@/lib/db'
  */
 export const createNoteInput = z.object({
   workspaceId: z.string(),
+
   title: z.string(),
+
   /**
    * Content can be any JSON object or string.
    */
@@ -38,7 +40,7 @@ export const createNoteInput = z.object({
  * Create a new note in the database.
  * @returns The newly created note.
  */
-export async function createNote(data: z.infer<typeof createNoteInput>) {
-  const note = await db.note.create({ data })
+export async function createNote(data: z.infer<typeof createNoteInput>, userId: string) {
+  const note = await db.note.create({ data: { ...data, userId } })
   return note
 }
