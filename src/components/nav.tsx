@@ -24,7 +24,7 @@ export default function Nav() {
         <div className="flex gap-6 md:gap-10">
           <Link
             href="/"
-            className="flex flex-col items-center hover:bg-surface-100-800-token rounded p-1 transition-all"
+            className="flex gap-2 items-end hover:bg-surface-100-800-token rounded p-1 transition-all"
           >
             <Image src="/scribblev4.png" alt="Scribble logo" height="42" width="42" />
             <span
