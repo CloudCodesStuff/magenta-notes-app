@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { trpc } from '@/lib/trpc'
 import NoteItem from '@/components/note-item'
+import { Button } from '@/components/ui/button'
 
 export const metadata = {
   title: 'Workspace',
@@ -38,9 +39,9 @@ export default function Page() {
     <div className="w-full">
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
         <div className="grid items-start gap-8">
-          <button onClick={handleClick} className="bg-red-400 p-2 rounded">
+          <Button onClick={handleClick} className="">
             Add New Note
-          </button>
+          </Button>
           <div>
             {notes.data?.length ? (
               <div className="divide-y p-4 flex gap-2 flex-wrap dotted divide-border rounded-md border">
