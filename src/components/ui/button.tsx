@@ -11,6 +11,7 @@ const buttonVariants = cva(
         primary: 'bg-primary-500 text-on-primary-token hover:bg-primary-600',
         secondary: 'bg-secondary-500 text-on-secondary-token hover:bg-secondary-600',
         tertiary: 'bg-tertiary-500 text-on-tertiary-token hover:bg-tertiary-600',
+        outline: 'bg-tertiary-500 text-on-tertiary-token hover:bg-tertiary-600',
         error: 'bg-error-500 text-on-error-token hover:bg-error-600',
         ghost: 'hover:bg-primary-500 hover:text-on-primary-token',
         link: 'hover:underline underline-offset-4',
