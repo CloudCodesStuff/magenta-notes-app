@@ -26,7 +26,7 @@ export default function Nav() {
             href="/"
             className="flex flex-col items-center hover:bg-surface-100-800-token rounded p-1 transition-all"
           >
-            <Image src="/scribblev4.png" alt="Scribble logo" height="64" width="64" />
+            <Image src="/scribblev4.png" alt="Scribble logo" height="42" width="42" />
             <span
               className={`hidden text-xl sm:inline-block tracking-widest text-primary-900-50-token ${dancingScript.className}`}
             >
