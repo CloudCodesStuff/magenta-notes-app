@@ -23,7 +23,9 @@ function App({ Component, pageProps: { session, ...pageProps } }: Props) {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className={inter.className}>
           <Nav {...pageProps} />
-          <Component {...pageProps} />
+          <main className="min-h-screen">
+            <Component {...pageProps} />
+          </main>
         </div>
         <Toaster />
       </ThemeProvider>

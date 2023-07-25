@@ -15,6 +15,7 @@ const config = {
       parser: '@typescript-eslint/parser',
     },
   ],
+  ignorePatterns: ['*.cjs'],
 }
 
 module.exports = config
