@@ -10,6 +10,7 @@ import { isAuthenticated } from '../middleware/is-authenticated'
 import { procedure, router } from '../trpc'
 import { getRecentNotesForUser } from '@/lib/services/notes/get-recent-for-user'
 import { createNoteSchema } from '@/lib/schemas/create-note'
+import { getNoteById } from '@/lib/services/notes/get-by-id'
 
 const notesRouter = router({
   /**
@@ -66,6 +67,11 @@ const notesRouter = router({
   getRecentNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
     const recentNotes = getRecentNotesForUser(opts.ctx.session.user.id)
     return recentNotes
+  }),
+
+  getNote: procedure.input(z.string()).query(async (opts) => {
+    const note = await getNoteById(opts.input)
+    return note
   }),
 })
 
