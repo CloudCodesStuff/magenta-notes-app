@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { updateNoteSchema } from '@/lib/schemas/update-note'
-import { createNote, createNoteInput } from '@/lib/services/notes/create'
+import { createNote } from '@/lib/services/notes/create'
 import { deleteNote } from '@/lib/services/notes/delete'
 import { getAllNotes } from '@/lib/services/notes/get-all'
 import { getWorkspaceNotes } from '@/lib/services/notes/get-for-workspace'
@@ -9,6 +9,8 @@ import { getStarredNotesforUser } from '@/lib/services/starred-note/get-for-user
 import { isAuthenticated } from '../middleware/is-authenticated'
 import { procedure, router } from '../trpc'
 import { getRecentNotesForUser } from '@/lib/services/notes/get-recent-for-user'
+import { createNoteSchema } from '@/lib/schemas/create-note'
+import { getNoteById } from '@/lib/services/notes/get-by-id'
 
 const notesRouter = router({
   /**
@@ -16,7 +18,7 @@ const notesRouter = router({
    */
   createNote: procedure
     .use(isAuthenticated)
-    .input(createNoteInput)
+    .input(createNoteSchema)
     .mutation(async (opts) => {
       const note = await createNote(opts.input, opts.ctx.session.user.id)
       return note
@@ -65,6 +67,11 @@ const notesRouter = router({
   getRecentNotesForUser: procedure.use(isAuthenticated).query(async (opts) => {
     const recentNotes = getRecentNotesForUser(opts.ctx.session.user.id)
     return recentNotes
+  }),
+
+  getNote: procedure.input(z.string()).query(async (opts) => {
+    const note = await getNoteById(opts.input)
+    return note
   }),
 })
 

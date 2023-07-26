@@ -100,7 +100,7 @@ model Note {
   user          User                @relation(fields: [userId], references: [id])
   userId        String
   workspaceId   String
-  workspace     Workspace           @relation(fields: [workspaceId], references: [id])
+  workspace     Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
   StarredNote   StarredNote[]
@@ -111,7 +111,7 @@ model Note {
 
 model WorkspaceCollaborators {
   workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   userId      String
   user        User      @relation(fields: [userId], references: [id])
   addedAt     DateTime  @default(now())
@@ -121,7 +121,7 @@ model WorkspaceCollaborators {
 
 model NoteCollaborators {
   noteId  String
-  note    Note     @relation(fields: [noteId], references: [id])
+  note    Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
   userId  String
   user    User     @relation(fields: [userId], references: [id])
   addedAt DateTime @default(now())
@@ -131,18 +131,18 @@ model NoteCollaborators {
 
 model StarredWorkspace {
   userId      String
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@id([userId, workspaceId])
 }
 
 model StarredNote {
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   noteId String
-  note   Note   @relation(fields: [noteId], references: [id])
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
 
   @@id([userId, noteId])
 }

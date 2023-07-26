@@ -50,10 +50,6 @@ export default function NavAvatar() {
           <Link href="/workspaces">Workspaces</Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem className="cursor-pointer" asChild>
-          <Link href="/editor">Editor</Link>
-        </DropdownMenuItem>
-
         <DropdownMenuSeparator />
 
         <DropdownMenuItem

@@ -1,11 +1,19 @@
-import { File } from 'lucide-react'
+import Link from 'next/link'
+import { File, Plus } from 'lucide-react'
 import { useRouter } from 'next/router'
+import { Button } from '@/components/ui/button'
 import {
-  CreateWorkspaceDialog,
-  type CreateWorkspaceDialogProps,
-} from '@/components/workspace-create'
-import { WorkspaceItem } from '@/components/workspace-item'
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { trpc } from '@/lib/trpc'
+import { formatDate } from '@/lib/formatdate'
+import { DeleteWorkspace } from '@/components/workspace-drop'
+import CreateWorkspaceForm from '@/components/forms/create-workspace'
 
 export const metadata = {
   title: 'Dashboard',
@@ -15,10 +23,6 @@ export default function Page() {
   const workspaces = trpc.workspaces.getWorkspacesForCurrentUser.useQuery()
 
   const router = useRouter()
-
-  const onSuccess: CreateWorkspaceDialogProps['onSuccess'] = async (data) => {
-    router.push(`/workspaces/${data.id}`)
-  }
 
   return (
     <div className="w-full p-10">
@@ -31,12 +35,47 @@ export default function Page() {
                 Create and manage workspaces.
               </p>
             </div>
-            <CreateWorkspaceDialog onSuccess={onSuccess} />
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button>
+                  <Plus className="mr-2 h-4 w-4"></Plus>
+                  New Workspace
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>New workspace</DialogTitle>
+                  <DialogDescription>Describe your new workspace</DialogDescription>
+                </DialogHeader>
+                <CreateWorkspaceForm onSuccess={(data) => router.push(`/workspaces/${data.id}`)} />
+              </DialogContent>
+            </Dialog>
           </div>
+
           {workspaces.data?.length ? (
             <div className="divide-y divide-border rounded border border-primary-500">
               {workspaces.data.map((workspace) => (
-                <WorkspaceItem key={workspace.id} workspace={workspace} />
+                <div
+                  key={workspace.id}
+                  className="flex items-center justify-between p-4 border-primary-500 hover:bg-slate-200 dark:hover:bg-slate-800"
+                >
+                  <div className="grid gap-1">
+                    <div>
+                      <Link
+                        href={`/workspaces/${workspace.id}`}
+                        className="font-semibold hover:underline"
+                      >
+                        {workspace.name}
+                      </Link>
+                      <p className="text-sm">{workspace.description}</p>
+                    </div>
+                    <div className="mt-1">
+                      <p className="text-sm">{formatDate(workspace.createdAt?.toDateString())}</p>
+                    </div>
+                  </div>
+                  <DeleteWorkspace workspaceId={workspace.id} />
+                </div>
               ))}
             </div>
           ) : (

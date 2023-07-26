@@ -81,9 +81,17 @@ export default function Dashboard() {
               <div className="flex flex-col gap-4">
                 {notesQuery.data?.map((note) => (
                   <div key={note.id} className="border rounded p-2">
-                    <div>ID: {note.id}</div>
-                    <div>Title: {note.title}</div>
-                    <div>Content: {note.content?.toString()}</div>
+                    <div
+                      className="p-4 mb-1 w-full"
+                      style={{ backgroundColor: note.color || 'gray' }}
+                    />
+                    <h3 className="text-xl font-semibold">{note.title}</h3>
+                    <p className="text-sm">Last Updated{note.updatedAt.toLocaleString()}</p>
+                    <Button size="sm" variant="outline" className="w-full my-2" asChild>
+                      <Link href={`/workspaces/notes/${note.id}`} className="cursor-pointer">
+                        Edit
+                      </Link>
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -103,9 +111,12 @@ export default function Dashboard() {
               <div className="flex flex-col gap-4">
                 {workspacesQuery.data?.map((workspace) => (
                   <div key={workspace.id} className="border p-2 rounded">
-                    <div>ID: {workspace.id}</div>
-                    <div>Name: {workspace.name}</div>
-                    <div>Description: {workspace.description}</div>
+                    <h2 className="text-xl font-semibold">{workspace.name}</h2>
+                    <p className="">{workspace.description}</p>
+                    <p className="text-sm">{workspace.updatedAt.toLocaleString()}</p>
+                    <Button size="sm" asChild className="w-full" variant="secondary">
+                      <Link href={`/workspaces/${workspace.id}`}>View</Link>
+                    </Button>
                   </div>
                 ))}
               </div>

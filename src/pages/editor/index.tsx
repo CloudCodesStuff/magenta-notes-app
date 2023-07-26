@@ -4,21 +4,18 @@ import { useEditor } from '@/components/use-editor'
 export default function Page() {
   const ref = useRef<HTMLDivElement | null>(null)
 
-  const editorRef = useEditor(
-    {
-      content: {
-        blocks: [
-          {
-            type: 'paragraph',
-            data: {
-              text: 'Hello World!',
-            },
+  const editorRef = useEditor({
+    content: {
+      blocks: [
+        {
+          type: 'paragraph',
+          data: {
+            text: 'Hello World!',
           },
-        ],
-      },
+        },
+      ],
     },
-    ref,
-  )
+  })
 
   // so eslint doesn't complain for now.
   editorRef

@@ -1,5 +1,6 @@
+import { createNoteSchema } from '@/lib/schemas/create-note'
 import { procedure, router } from '../trpc'
-import { createNote, createNoteInput } from '@/lib/services/notes/create'
+import { createNote } from '@/lib/services/notes/create'
 import { getAllWorkspaces } from '@/lib/services/workspaces/get-all'
 
 /**
@@ -32,7 +33,7 @@ const examplePrismaRouter = router({
    * Given note information, add it to the database.
    * @returns The newly created note.
    */
-  createNote: procedure.input(createNoteInput).mutation(async (opts) => {
+  createNote: procedure.input(createNoteSchema).mutation(async (opts) => {
     const note = await createNote(opts.input, userId)
     return note
   }),

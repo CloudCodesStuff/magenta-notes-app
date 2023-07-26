@@ -21,27 +21,46 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Loader2, MoreVertical, Trash2 } from 'lucide-react'
-import { Workspace } from '@prisma/client'
-import { trpc, type RouterOutput } from '@/lib/trpc'
+import { trpc } from '@/lib/trpc'
 import { useToast } from './ui/use-toast'
 
-type MutationOutput = RouterOutput['workspaces']['deleteWorkspace']
-export interface CreateWorkspaceDialogProps {
-  onError?: (error: unknown, variables: unknown, context: unknown) => void
-  onSuccess?: (data: MutationOutput, variables: unknown, context: unknown) => void
+interface Props {
+  workspaceId: string
 }
 
-interface WorkspaceItemProps {
-  workspace: Pick<Workspace, 'id' | 'name' | 'description' | 'userId' | 'createdAt' | 'updatedAt'>
-}
+export function DeleteWorkspace({ workspaceId }: Props) {
+  const [showDeleteAlert, setShowDeleteAlert] = React.useState(false)
 
-export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
+  const { toast } = useToast()
+
   const utils = trpc.useContext()
+
   const mutation = trpc.workspaces.deleteWorkspace.useMutation()
 
-  const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
-  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
-  const { toast } = useToast()
+  const handleDelete = React.useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault()
+
+      mutation.mutate(workspaceId, {
+        onSuccess() {
+          utils.workspaces.getWorkspacesForCurrentUser.invalidate()
+          toast({
+            title: 'Workspace succesfully deleted.',
+          })
+        },
+        onError() {
+          toast({
+            variant: 'destructive',
+            title: 'Uh oh! Something went wrong.',
+            description: 'There was a problem with your request.',
+          })
+        },
+      })
+
+      setShowDeleteAlert(false)
+    },
+    [mutation, toast, setShowDeleteAlert, workspaceId, utils],
+  )
 
   return (
     <>
@@ -52,7 +71,7 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
-            <Link href={`/dashboard/${workspace.id}`} className="flex w-full">
+            <Link href={`/dashboard/${workspaceId}`} className="flex w-full">
               Edit
             </Link>
           </DropdownMenuItem>
@@ -65,6 +84,7 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -74,32 +94,10 @@ export function DeleteWorkspace({ workspace }: WorkspaceItemProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={async (event) => {
-                event.preventDefault()
-                setIsDeleteLoading(true)
-
-                mutation.mutate(workspace.id, {
-                  onSuccess() {
-                    utils.workspaces.getWorkspacesForCurrentUser.invalidate()
-                    toast({
-                      title: 'Workspace succesfully deleted.',
-                    })
-                  },
-                  onError() {
-                    toast({
-                      variant: 'destructive',
-                      title: 'Uh oh! Something went wrong.',
-                      description: 'There was a problem with your request.',
-                    })
-                  },
-                })
-                setIsDeleteLoading(false)
-                setShowDeleteAlert(false)
-                // router.refresh()
-              }}
+              onClick={handleDelete}
               className="bg-destructive focus:ring-destructive"
             >
-              {isDeleteLoading ? (
+              {mutation.isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <Trash2 className="mr-2 h-4 w-4" />
