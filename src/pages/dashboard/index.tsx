@@ -111,9 +111,12 @@ export default function Dashboard() {
               <div className="flex flex-col gap-4">
                 {workspacesQuery.data?.map((workspace) => (
                   <div key={workspace.id} className="border p-2 rounded">
-                    <div>ID: {workspace.id}</div>
-                    <div>Name: {workspace.name}</div>
-                    <div>Description: {workspace.description}</div>
+                    <h2 className="text-xl font-semibold">{workspace.name}</h2>
+                    <p className="">{workspace.description}</p>
+                    <p className="text-sm">{workspace.updatedAt.toLocaleString()}</p>
+                    <Button size="sm" asChild className="w-full" variant="secondary">
+                      <Link href={`/workspaces/${workspace.id}`}>View</Link>
+                    </Button>
                   </div>
                 ))}
               </div>
