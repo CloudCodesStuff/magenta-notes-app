@@ -22,6 +22,8 @@ export const metadata = {
 export default function Page() {
   const workspaces = trpc.workspaces.getWorkspacesForCurrentUser.useQuery()
 
+  const utils = trpc.useContext()
+
   const router = useRouter()
 
   return (
@@ -48,7 +50,12 @@ export default function Page() {
                   <DialogTitle>New workspace</DialogTitle>
                   <DialogDescription>Describe your new workspace</DialogDescription>
                 </DialogHeader>
-                <CreateWorkspaceForm onSuccess={(data) => router.push(`/workspaces/${data.id}`)} />
+                <CreateWorkspaceForm
+                  onSuccess={(data) => {
+                    utils.workspaces.invalidate()
+                    router.push(`/workspaces/${data.id}`)
+                  }}
+                />
               </DialogContent>
             </Dialog>
           </div>

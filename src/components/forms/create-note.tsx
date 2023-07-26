@@ -64,7 +64,6 @@ export default function CreateNoteForm(props: Props) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Color</FormLabel>
-
               <FormControl>
                 <Input {...field} />
               </FormControl>

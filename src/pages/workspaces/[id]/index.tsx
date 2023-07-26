@@ -87,7 +87,10 @@ export default function Page() {
                 </DialogHeader>
                 <CreateNoteForm
                   workspaceId={workspaceId}
-                  onSuccess={(data) => router.push(`/workspaces/${workspaceId}/notes/${data.id}`)}
+                  onSuccess={(data) => {
+                    utils.notes.invalidate()
+                    router.push(`/workspaces/${workspaceId}/notes/${data.id}`)
+                  }}
                 />
               </DialogContent>
             </Dialog>
