@@ -3,20 +3,33 @@ import Image from 'next/image'
 import { useSession, signIn } from 'next-auth/react'
 import NavAvatar from './nav-avatar'
 import { Button } from './ui/button'
-// import {
-//   NavigationMenuLink,
-//   NavigationMenu,
-//   NavigationMenuList,
-//   NavigationMenuItem,
-//   navigationMenuTriggerStyle,
-// } from './ui/navigation-menu'
+import {
+  NavigationMenuLink,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  navigationMenuTriggerStyle,
+} from './ui/navigation-menu'
 import ThemeToggle from './theme-toggle'
 import { Pacifico } from 'next/font/google'
+import { useMemo } from 'react'
 
 const dancingScript = Pacifico({ subsets: ['latin'], weight: '400' })
 
+const loggedOutLinks = [{ label: 'Home', href: '/' }]
+
+const loggedInLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Dashboard', href: '/dashboard' },
+  { label: 'Workspaces', href: '/workspaces' },
+]
+
 export default function Nav() {
   const { data: session } = useSession()
+
+  const links = useMemo(() => {
+    return session?.user.id != null ? loggedInLinks : loggedOutLinks
+  }, [session])
 
   return (
     <nav className="px-7">
@@ -33,17 +46,17 @@ export default function Nav() {
               Scribble
             </span>
           </Link>
-          {/*
           <NavigationMenu>
             <NavigationMenuList className="hidden sm:flex">
-              <NavigationMenuItem>
-                <NavigationMenuLink href="/" className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+              {links.map((link) => (
+                <NavigationMenuItem key={link.href}>
+                  <NavigationMenuLink href={link.href} className={navigationMenuTriggerStyle()}>
+                    {link.label}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
             </NavigationMenuList>
           </NavigationMenu>
-          */}
         </div>
         <div className="flex items-center gap-4">
           <div>

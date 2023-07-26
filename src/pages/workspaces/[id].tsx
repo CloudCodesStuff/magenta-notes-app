@@ -1,8 +1,21 @@
+import Link from 'next/link'
 import { useMemo } from 'react'
+import { Pen } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { trpc } from '@/lib/trpc'
-import NoteItem from '@/components/note-item'
+import { formatDate } from '@/lib/formatdate'
+import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Plus } from 'lucide-react'
+import CreateNoteForm from '@/components/forms/create-note'
 
 export const metadata = {
   title: 'Workspace',
@@ -21,32 +34,59 @@ export default function Page() {
 
   const notes = trpc.notes.getNotesForWorkspace.useQuery(workspaceId)
 
-  const mutation = trpc.notes.createNote.useMutation()
-
-  const handleClick = async () => {
-    console.log('test')
-    mutation.mutate(
-      { workspaceId, content: 'Edit note here', title: 'Test title purple', color: 'purple' },
-      {
-        onSuccess(data) {
-          router.push(`/workspaces/notes/${data.id}`)
-        },
-      },
-    )
-  }
-
   return (
-    <div className="w-full">
+    <div className="w-full p-10">
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
         <div className="grid items-start gap-8">
-          <Button onClick={handleClick} className="">
-            Add New Note
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Create Note
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>New Note</DialogTitle>
+                <DialogDescription>Describe your new note</DialogDescription>
+              </DialogHeader>
+              <CreateNoteForm
+                workspaceId={workspaceId}
+                onSuccess={(data) => router.push(`/workspaces/notes/${data.id}`)}
+              />
+            </DialogContent>
+          </Dialog>
+
           <div>
             {notes.data?.length ? (
               <div className="divide-y p-4 flex gap-2 flex-wrap dotted  divide-border rounded-md border">
                 {notes.data.map((note) => (
-                  <NoteItem key={note.id} note={note} />
+                  <Card
+                    key={note.id}
+                    className="w-60 bg-background h-60 overflow-hidden justify-between shadow-md relative flex flex-col"
+                  >
+                    <div className="flex flex-grow flex-col">
+                      <div
+                        className="p-4 mb-1 w-full"
+                        style={{ backgroundColor: note.color || 'gray' }}
+                      />
+
+                      <div className="flex px-4 py-3 flex-grow">
+                        <h1 className="font-semibold">{note.title}</h1>
+                      </div>
+
+                      <div className="flex px-4 py-3 justify-between">
+                        <h1 className="my-auto text-muted-foreground">
+                          {formatDate(note.createdAt?.toDateString())}
+                        </h1>
+                        <Button className="rounded-full w-10 h-10 p-2 flex" asChild>
+                          <Link href={`/workspaces/notes/${note.id}`}>
+                            <Pen className="w-5 h-6" />
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
                 ))}
               </div>
             ) : (
@@ -59,10 +99,6 @@ export default function Page() {
                 </div>
               </div>
             )}
-          </div>
-          <div>
-            <span>Raw Data</span>
-            <pre>{JSON.stringify(notes.data, null, 2)}</pre>
           </div>
         </div>
       </div>
