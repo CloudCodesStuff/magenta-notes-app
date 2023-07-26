@@ -7,6 +7,7 @@ import { Pen } from 'lucide-react'
 interface NoteItemProps {
   note: Pick<Note, 'id' | 'color' | 'title' | 'content' | 'createdAt' | 'updatedAt'>
 }
+
 // Add an index signature to allow any string key
 const colorVariants: Record<string, string> = {
   blue: 'bg-blue-500',
@@ -20,9 +21,10 @@ const colorVariants: Record<string, string> = {
 
 export default function NoteItem({ note }: NoteItemProps) {
   const colorClass = note.color ? colorVariants[note.color] : ''
+
   return (
     <Card className="w-60 bg-background h-60 overflow-hidden justify-between shadow-md relative flex flex-col">
-      <div className='flex flex-grow flex-col'>
+      <div className="flex flex-grow flex-col">
         {note.color ? (
           <div className={`${colorClass} p-4 mb-1 w-full`}></div>
         ) : (

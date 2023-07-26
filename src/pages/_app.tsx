@@ -9,6 +9,7 @@ import type { Session } from 'next-auth'
 import type { AppProps } from 'next/app'
 import { trpc } from '@/lib/trpc'
 import Nav from '@/components/nav'
+import Footer from '@/components/footer'
 import { Toaster } from '@/components/ui/toaster'
 
 type Props = AppProps<{ session: Session }>
@@ -22,10 +23,11 @@ function App({ Component, pageProps: { session, ...pageProps } }: Props) {
     <SessionProvider session={session}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className={inter.className}>
-          <Nav {...pageProps} />
+          <Nav />
           <main className="min-h-screen">
             <Component {...pageProps} />
           </main>
+          <Footer />
         </div>
         <Toaster />
       </ThemeProvider>

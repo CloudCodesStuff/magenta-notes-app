@@ -21,10 +21,10 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full p-10">
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
         <div className="grid items-start gap-8">
-          <div className="flex items-center justify-between px-2">
+          <div className="flex items-center justify-between">
             <div className="grid gap-1">
               <h1 className="font-bold text-3xl md:text-4xl">Workspaces</h1>
               <p className="text-lg text-slate-600 dark:text-slate-300">
@@ -34,7 +34,7 @@ export default function Page() {
             <CreateWorkspaceDialog onSuccess={onSuccess} />
           </div>
           {workspaces.data?.length ? (
-            <div className="divide-y divide-border  rounded-md border">
+            <div className="divide-y divide-border rounded border border-primary-500">
               {workspaces.data.map((workspace) => (
                 <WorkspaceItem key={workspace.id} workspace={workspace} />
               ))}

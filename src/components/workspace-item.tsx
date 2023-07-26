@@ -9,7 +9,7 @@ interface WorkspaceItemProps {
 
 export function WorkspaceItem({ workspace }: WorkspaceItemProps) {
   return (
-    <div className="flex items-center justify-between p-4">
+    <div className="flex items-center justify-between p-4 border-primary-500">
       <div className="grid gap-1">
         <div>
           <Link href={`/workspaces/${workspace.id}`} className="font-semibold hover:underline">

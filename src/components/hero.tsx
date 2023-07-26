@@ -1,7 +1,3 @@
 export default function Hero() {
-  return (
-    <>
-      hero
-    </>
-  )
+  return <>hero</>
 }
