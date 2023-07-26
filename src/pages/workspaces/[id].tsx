@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import { trpc } from '@/lib/trpc'
 import NoteItem from '@/components/note-item'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/dropdown-menu'
 
 export const metadata = {
   title: 'Workspace',
@@ -38,10 +40,12 @@ export default function Page() {
   return (
     <div className="w-full">
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
-        <div className="grid items-start gap-8">
-          <Button onClick={handleClick} className="">
-            Add New Note
-          </Button>
+        <div className="flex gap-2 flex-col">
+          <div className="flex w-full max-w-sm items-center space-x-2">
+            <Input type="email" placeholder="Email" />
+            <Button type="submit">Subscribe</Button>
+          </div>
+
           <div>
             {notes.data?.length ? (
               <div className="divide-y p-4 flex gap-2 flex-wrap dotted  divide-border rounded-md border">
