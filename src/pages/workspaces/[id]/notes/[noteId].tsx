@@ -4,12 +4,13 @@ import { useEditor } from '@/components/use-editor'
 import { Loader2, ChevronLeft } from 'lucide-react'
 import { trpc } from '@/lib/trpc'
 import { Button } from '@/components/ui/button'
+import { BreadCrumbs } from '@/components/bread-crumbs'
 
 export default function Page() {
   const router = useRouter()
 
   const noteId = useMemo(() => {
-    return router.query.id?.toString() ?? '0'
+    return router.query.noteId?.toString() ?? '0'
   }, [router.query.id])
 
   const query = trpc.notes.getNote.useQuery(noteId, {
@@ -51,6 +52,9 @@ export default function Page() {
 
   return (
     <div className="p-10">
+      <div className="my-2">
+        <BreadCrumbs />
+      </div>
       <div className="w-full flex">
         <Button onClick={() => router.back()} variant="secondary">
           <ChevronLeft className="mr-2 h-4 w-4" />

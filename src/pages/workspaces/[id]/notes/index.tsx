@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoreVertical } from 'lucide-react'
+import { BreadCrumbs } from '@/components/bread-crumbs'
 
 export const metadata = {
   title: 'Workspace',
@@ -57,7 +58,10 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full p-10">
+    <div className="p-10">
+      <div className="my-2">
+        <BreadCrumbs />
+      </div>
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
         <div className="grid items-start gap-8">
           <Dialog>
@@ -105,7 +109,7 @@ export default function Page() {
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem asChild>
                               <Link
-                                href={`/workspaces/notes/${note.id}`}
+                                href={`/workspaces/${workspaceId}/notes/${note.id}`}
                                 className="cursor-pointer"
                               >
                                 Edit
@@ -131,7 +135,7 @@ export default function Page() {
 
                     <CardFooter>
                       <Button size="sm" className="ml-auto rounded-full w-10 h-10 p-2 flex" asChild>
-                        <Link href={`/workspaces/notes/${note.id}`}>
+                        <Link href={`/workspaces/${workspaceId}/notes/${note.id}`}>
                           <Pen className="w-5 h-6" />
                         </Link>
                       </Button>
