@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type EditorJS from '@editorjs/editorjs'
 
 export interface EditorProps {
@@ -33,6 +33,7 @@ export async function defaultTools() {
  */
 export function useEditor(props: EditorProps = {}) {
   const ref = useRef<EditorJS>()
+  const [mounted, setMounted] = useState(false)
 
   /**
    * Initialize the editor with the initial props.
@@ -45,35 +46,28 @@ export function useEditor(props: EditorProps = {}) {
 
       const EditorJS = (await import('@editorjs/editorjs')).default
 
-      ref.current ??= new EditorJS({
+      ref.current = new EditorJS({
         holder,
+        onReady() {
+          setMounted(true)
+        },
         inlineToolbar: true,
         placeholder: 'Type here to write your post...',
         data: props.content,
         tools: await (props.tools ?? defaultTools)(),
       })
     },
-    [ref, props.content, props.tools],
+    [ref, props.content, props.tools, setMounted],
   )
 
-  /**
-   * Initialize the editor on mount and destroy it on unmount.
-   */
   useEffect(() => {
     return () => {
-      ref.current?.destroy()
+      if (typeof ref.current?.destroy === 'function') {
+        ref.current.destroy()
+      }
       ref.current = undefined
     }
-  }, [ref, setRef])
+  }, [])
 
-  /**
-   * If initial content provided to the hook ever changes, re-render the editor.
-   */
-  useEffect(() => {
-    if (ref.current && props.content) {
-      ref.current.render(props.content)
-    }
-  }, [props.content])
-
-  return [ref, setRef] as const
+  return [ref, setRef, mounted] as const
 }

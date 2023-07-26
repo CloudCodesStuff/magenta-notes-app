@@ -4,8 +4,8 @@ import { Pen } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { trpc } from '@/lib/trpc'
 import { formatDate } from '@/lib/formatdate'
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,14 @@ import {
 } from '@/components/ui/dialog'
 import { Plus } from 'lucide-react'
 import CreateNoteForm from '@/components/forms/create-note'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { MoreVertical } from 'lucide-react'
 
 export const metadata = {
   title: 'Workspace',
@@ -33,6 +41,20 @@ export default function Page() {
   }
 
   const notes = trpc.notes.getNotesForWorkspace.useQuery(workspaceId)
+
+  const mutation = trpc.notes.deleteNote.useMutation()
+
+  const utils = trpc.useContext()
+
+  const handleDelete = (id: string) => {
+    return () => {
+      mutation.mutate(id, {
+        onSuccess() {
+          utils.notes.getNotesForWorkspace.invalidate()
+        },
+      })
+    }
+  }
 
   return (
     <div className="w-full p-10">
@@ -65,27 +87,55 @@ export default function Page() {
                     key={note.id}
                     className="w-60 bg-background h-60 overflow-hidden justify-between shadow-md relative flex flex-col"
                   >
-                    <div className="flex flex-grow flex-col">
+                    <CardHeader>
                       <div
                         className="p-4 mb-1 w-full"
                         style={{ backgroundColor: note.color || 'gray' }}
                       />
 
-                      <div className="flex px-4 py-3 flex-grow">
-                        <h1 className="font-semibold">{note.title}</h1>
+                      <div className="flex items-center justify-between">
+                        <CardTitle>{note.title}</CardTitle>
+
+                        <DropdownMenu>
+                          <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
+                            <MoreVertical className="h-4 w-4" />
+                            <span className="sr-only">Open</span>
+                          </DropdownMenuTrigger>
+
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/workspaces/notes/${note.id}`}
+                                className="cursor-pointer"
+                              >
+                                Edit
+                              </Link>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuSeparator />
+
+                            <DropdownMenuItem
+                              className="flex cursor-pointer items-center  text-destructive focus:text-destructive"
+                              onClick={handleDelete(note.id)}
+                            >
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
 
-                      <div className="flex px-4 py-3 justify-between">
-                        <h1 className="my-auto text-muted-foreground">
-                          {formatDate(note.createdAt?.toDateString())}
-                        </h1>
-                        <Button className="rounded-full w-10 h-10 p-2 flex" asChild>
-                          <Link href={`/workspaces/notes/${note.id}`}>
-                            <Pen className="w-5 h-6" />
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
+                      <CardDescription>
+                        {formatDate(note.createdAt?.toDateString())}
+                      </CardDescription>
+                    </CardHeader>
+
+                    <CardFooter>
+                      <Button size="sm" className="ml-auto rounded-full w-10 h-10 p-2 flex" asChild>
+                        <Link href={`/workspaces/notes/${note.id}`}>
+                          <Pen className="w-5 h-6" />
+                        </Link>
+                      </Button>
+                    </CardFooter>
                   </Card>
                 ))}
               </div>
