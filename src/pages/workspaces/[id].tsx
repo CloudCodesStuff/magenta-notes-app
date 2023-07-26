@@ -44,7 +44,7 @@ export default function Page() {
           </Button>
           <div>
             {notes.data?.length ? (
-              <div className="divide-y p-4 flex gap-2 flex-wrap dotted divide-border rounded-md border">
+              <div className="divide-y p-4 flex gap-2 flex-wrap dotted  divide-border rounded-md border">
                 {notes.data.map((note) => (
                   <NoteItem key={note.id} note={note} />
                 ))}
