@@ -22,7 +22,7 @@ export function BreadCrumbs() {
         })
         return links
       }, [] as BreadCrumbLink[])
-  }, [router.route])
+  }, [router.asPath])
 
   return (
     <div className="flex items-center gap-2">

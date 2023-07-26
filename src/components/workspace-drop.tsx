@@ -71,7 +71,7 @@ export function DeleteWorkspace({ workspaceId }: Props) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
-            <Link href={`/dashboard/${workspaceId}`} className="flex w-full">
+            <Link href={`/workspaces/${workspaceId}`} className="flex w-full">
               Edit
             </Link>
           </DropdownMenuItem>

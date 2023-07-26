@@ -174,7 +174,7 @@ export default function Page() {
 
         <div className="flex flex-col gap-4 justify-center">
           <Button asChild variant="ghost" className="py-8">
-            <Link href={`/workspaces/${workspaceId}/teams`}>
+            <Link href={`/workspaces/${workspaceId}/collaborators`}>
               <span className="text-5xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-tr from-stone-400 via-yellow-600 to-purple-800">
                 Collaborators
               </span>

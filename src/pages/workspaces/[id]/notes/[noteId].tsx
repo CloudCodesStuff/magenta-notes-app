@@ -11,7 +11,7 @@ export default function Page() {
 
   const noteId = useMemo(() => {
     return router.query.noteId?.toString() ?? '0'
-  }, [router.query.id])
+  }, [router.query.noteId])
 
   const query = trpc.notes.getNote.useQuery(noteId, {
     refetchOnReconnect: false,

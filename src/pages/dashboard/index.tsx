@@ -12,6 +12,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 export const metadata = {
   title: 'Dashboard',
@@ -25,12 +27,22 @@ const tabs = [
   { label: 'Tasks', href: '/dashboard/tasks', icon: Check },
 ]
 
+function findMatchingTab(pathname: string) {
+  return tabs.find((tab) => pathname.startsWith(tab.href))
+}
+
 export default function Dashboard() {
   const { data: session } = useSession()
+
+  const router = useRouter()
 
   const workspacesQuery = trpc.workspaces.getWorkspacesForCurrentUser.useQuery()
   const notesQuery = trpc.notes.getRecentNotesForUser.useQuery()
   const teamsQuery = trpc.teams.getCurrentUserTeams.useQuery()
+
+  const currentTab = useMemo(() => {
+    return findMatchingTab(router.asPath)
+  }, [router.asPath])
 
   if (!session) {
     return <div>You must be signed in</div>
@@ -56,7 +68,12 @@ export default function Dashboard() {
         <CardContent className="mt-4 px-2">
           <ul>
             {tabs.map((tab) => (
-              <li key={tab.href} className="rounded hover:bg-slate-300 dark:hover:bg-slate-600">
+              <li
+                key={tab.href}
+                className={`my-2 rounded hover:bg-slate-300 dark:hover:bg-slate-600 ${
+                  currentTab?.href === tab.href && 'bg-slate-300 dark:bg-slate-600'
+                }`}
+              >
                 <a href={tab.href} className="inline-block w-full p-4 whitespace-nowrap">
                   <tab.icon className="inline-block w-5 h-5" />
                   <span className="hidden md:inline ml-5">{tab.label}</span>
@@ -88,7 +105,10 @@ export default function Dashboard() {
                     <h3 className="text-xl font-semibold">{note.title}</h3>
                     <p className="text-sm">Last Updated{note.updatedAt.toLocaleString()}</p>
                     <Button size="sm" variant="outline" className="w-full my-2" asChild>
-                      <Link href={`/workspaces/notes/${note.id}`} className="cursor-pointer">
+                      <Link
+                        href={`/workspaces/${note.workspaceId}/notes/${note.id}`}
+                        className="cursor-pointer"
+                      >
                         Edit
                       </Link>
                     </Button>
@@ -157,11 +177,11 @@ export default function Dashboard() {
             <CardFooter>
               {teamsQuery.data?.length ? (
                 <Button variant="secondary" asChild className="w-full">
-                  <Link href="/teams">View All</Link>
+                  <Link href="/dashboard/teams">View All</Link>
                 </Button>
               ) : (
                 <Button variant="secondary" asChild className="w-full">
-                  <Link href="/teams">Create a Team</Link>
+                  <Link href="/dashboard/teams">Create a Team</Link>
                 </Button>
               )}
             </CardFooter>
