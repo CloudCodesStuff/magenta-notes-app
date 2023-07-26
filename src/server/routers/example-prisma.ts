@@ -3,6 +3,11 @@ import { createNote, createNoteInput } from '@/lib/services/notes/create'
 import { getAllWorkspaces } from '@/lib/services/workspaces/get-all'
 
 /**
+ * @example user ID.
+ */
+const userId = '123'
+
+/**
  * The concepts being presented here are request handlers vs. services.
  *
  * The request handler will receive `opts`, which are request paramaters.
@@ -28,7 +33,7 @@ const examplePrismaRouter = router({
    * @returns The newly created note.
    */
   createNote: procedure.input(createNoteInput).mutation(async (opts) => {
-    const note = await createNote(opts.input)
+    const note = await createNote(opts.input, userId)
     return note
   }),
 

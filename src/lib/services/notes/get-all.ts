@@ -1,7 +1,7 @@
 import { db } from '@/lib/db'
 
 /**
- * Find all workspaces.
+ * Find all notes. For testing.
  */
 export async function getAllNotes() {
   const allNotes = await db.note.findMany({
