@@ -38,7 +38,7 @@ export default function Dashboard() {
 
   return (
     <div className="w-full mx-auto max-w-7xl flex gap-2 p-10">
-      <Card className="grow-0 w-16 lg:w-60 h-fit overflow-hidden bg-surface-300-600-token">
+      <Card className="grow-0 w-16 lg:w-60 h-fit overflow-hidden">
         <CardHeader className="p-0">
           <CardTitle>
             <div className="w-full h-16 bg-gradient-to-br from-green-300 via-blue-500 to-purple-600" />
@@ -56,8 +56,8 @@ export default function Dashboard() {
         <CardContent className="mt-4 px-2">
           <ul>
             {tabs.map((tab) => (
-              <li key={tab.href} className="rounded hover:bg-red-400">
-                <a href={tab.href} className="inline-block p-4 whitespace-nowrap">
+              <li key={tab.href} className="rounded hover:bg-slate-300 dark:hover:bg-slate-600">
+                <a href={tab.href} className="inline-block w-full p-4 whitespace-nowrap">
                   <tab.icon className="inline-block w-5 h-5" />
                   <span className="hidden md:inline ml-5">{tab.label}</span>
                 </a>

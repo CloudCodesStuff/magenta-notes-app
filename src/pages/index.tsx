@@ -63,7 +63,7 @@ export default function Page() {
       <div className="my-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 id="features" className="text-5xl font-bold text-primary-600-300-token">
+            <h2 id="features" className="text-5xl font-bold">
               Features
             </h2>
             <p className="mt-2 text-2xl font-semibold">Everything you need to stay organized</p>
@@ -76,9 +76,9 @@ export default function Page() {
             <dl className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {features.map((feature) => (
                 <div key={feature.name} className="relative pl-16">
-                  <dt className="text-base font-semibold leading-7 text-tertiary-800-100-token">
-                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500">
-                      <feature.icon className="w-6 h-6 text-on-primary-token" />
+                  <dt className="text-base font-semibold leading-7">
+                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg">
+                      <feature.icon className="w-6 h-6" />
                     </div>
                     {feature.name}
                   </dt>
