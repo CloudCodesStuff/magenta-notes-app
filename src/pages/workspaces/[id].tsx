@@ -4,7 +4,6 @@ import { trpc } from '@/lib/trpc'
 import NoteItem from '@/components/note-item'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/dropdown-menu'
 
 export const metadata = {
   title: 'Workspace',
@@ -42,8 +41,8 @@ export default function Page() {
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
         <div className="flex gap-2 flex-col">
           <div className="flex w-full max-w-sm items-center space-x-2">
-            <Input type="email" placeholder="Email" />
-            <Button type="submit">Subscribe</Button>
+            <Input type="" placeholder="Title" />
+            <Button type="submit" onClick={handleClick}>Create</Button>
           </div>
 
           <div>
