@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -48,6 +49,8 @@ model User {
   NoteCollaborators      NoteCollaborators[]
   TeamCollaborators      TeamCollaborators[]
   Note                   Note[]
+
+  @@fulltext([name])
 }
 
 model Team {
