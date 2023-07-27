@@ -52,7 +52,7 @@ export default function Page() {
             </Link>
           </Button>
 
-          <div className="grid items-start gap-8">
+          <div className="flex justify-end">
             <Dialog>
               <DialogTrigger asChild>
                 <Button>
@@ -74,50 +74,50 @@ export default function Page() {
                 />
               </DialogContent>
             </Dialog>
+          </div>
 
-            <div>
-              {notes.data?.length ? (
-                <div
-                  className="divide-y p-4 flex gap-4 flex-wrap divide-border rounded-md border"
-                  style={{
-                    backgroundImage: 'radial-gradient(gray 1px, transparent 0)',
-                    backgroundSize: '20px 20px',
-                  }}
-                >
-                  {notes.data.map((note) => (
-                    <div key={note.id} className="w-60">
-                      <StickyNote {...note} />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50">
-                  <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-                    <h2 className="mt-6 text-xl font-semibold">No notes created</h2>
-                    <p className="mb-8 mt-2 text-center text-sm font-normal leading-6">
-                      You don&apos;t have any notes yet. Create one and get planning!
-                    </p>
+          <div>
+            {notes.data?.length ? (
+              <div
+                className="divide-y p-4 flex gap-4 flex-wrap divide-border rounded-md border"
+                style={{
+                  backgroundImage: 'radial-gradient(gray 1px, transparent 0)',
+                  backgroundSize: '20px 20px',
+                }}
+              >
+                {notes.data.map((note) => (
+                  <div key={note.id} className="w-60">
+                    <StickyNote {...note} />
                   </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50">
+                <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
+                  <h2 className="mt-6 text-xl font-semibold">No notes created</h2>
+                  <p className="mb-8 mt-2 text-center text-sm font-normal leading-6">
+                    You don&apos;t have any notes yet. Create one and get planning!
+                  </p>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        <div className="my-8" />
+      <div className="my-8" />
 
-        <div className="flex flex-col gap-4 justify-center">
-          <Button asChild variant="ghost" className="py-8">
-            <Link href={`/workspaces/${workspaceId}/collaborators`}>
-              <span className="text-5xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-tr from-stone-400 via-yellow-600 to-purple-800">
-                Collaborators
-              </span>
-              <ChevronRight className="font-extrabold h-12 w-12 " />
-            </Link>
-          </Button>
+      <div className="flex flex-col gap-4 justify-center">
+        <Button asChild variant="ghost" className="py-8">
+          <Link href={`/workspaces/${workspaceId}/collaborators`}>
+            <span className="text-5xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-tr from-stone-400 via-yellow-600 to-purple-800">
+              Collaborators
+            </span>
+            <ChevronRight className="font-extrabold h-12 w-12 " />
+          </Link>
+        </Button>
 
-          <div>TODO</div>
-        </div>
+        <div>TODO</div>
       </div>
     </div>
   )

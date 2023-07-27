@@ -10,10 +10,20 @@ export async function getWorkspaceNotes(workspaceId: string) {
     where: {
       workspaceId,
     },
+    include: {
+      StarredNote: true,
+    },
     orderBy: {
       updatedAt: 'desc',
     },
   })
 
-  return allNotes
+  const withStarredNotes = allNotes.map((note) => {
+    return {
+      ...note,
+      starred: note.StarredNote.length > 0,
+    }
+  })
+
+  return withStarredNotes
 }

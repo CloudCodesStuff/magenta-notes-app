@@ -17,11 +17,25 @@ export async function getRecentNotesForUser(userId: string) {
         },
       ],
     },
+    include: {
+      StarredNote: {
+        where: {
+          userId,
+        },
+      },
+    },
     orderBy: {
       updatedAt: 'desc',
     },
     take: 10,
   })
 
-  return allNotes
+  const withStarredNotes = allNotes.map((note) => {
+    return {
+      ...note,
+      starred: note.StarredNote.length > 0,
+    }
+  })
+
+  return withStarredNotes
 }

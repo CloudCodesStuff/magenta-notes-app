@@ -48,6 +48,7 @@ export default function Page() {
               Create and manage notes in this workspace.
             </p>
           </div>
+
           <Dialog>
             <DialogTrigger asChild>
               <Button>

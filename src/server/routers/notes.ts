@@ -11,6 +11,8 @@ import { procedure, router } from '../trpc'
 import { getRecentNotesForUser } from '@/lib/services/notes/get-recent-for-user'
 import { createNoteSchema } from '@/lib/schemas/create-note'
 import { getNoteById } from '@/lib/services/notes/get-by-id'
+import { starNoteSchema } from '@/lib/schemas/star-note'
+import { starNote } from '@/lib/services/notes/star-note'
 
 const notesRouter = router({
   /**
@@ -73,6 +75,18 @@ const notesRouter = router({
     const note = await getNoteById(opts.input)
     return note
   }),
+
+  starNote: procedure
+    .use(isAuthenticated)
+    .input(starNoteSchema.omit({ userId: true }))
+    .mutation(async (opts) => {
+      const note = await starNote({
+        userId: opts.ctx.session.user.id,
+        noteId: opts.input.noteId,
+        starred: opts.input.starred,
+      })
+      return note
+    }),
 })
 
 export default notesRouter
