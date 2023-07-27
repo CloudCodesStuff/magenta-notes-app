@@ -41,43 +41,45 @@ export default function Layout({ children }: Props) {
 
   return (
     <div className="w-full mx-auto max-w-7xl flex gap-2 p-10">
-      <Card className="grow-0 h-fit overflow-hidden min-w-max">
-        <CardHeader className="p-0">
-          <CardTitle>
-            <div className="w-full h-16 bg-gradient-to-br from-green-300 via-blue-500 to-purple-600" />
-            <Avatar className="mx-auto -mt-6 h-12 w-12">
-              <AvatarImage src={session.user.image ?? ''} alt="profile picture" />
-              <AvatarFallback>{session.user.name?.charAt(0)}</AvatarFallback>
-            </Avatar>
-          </CardTitle>
+      <div>
+        <Card className="h-fit overflow-hidden w-24 md:w-60">
+          <CardHeader className="p-0">
+            <CardTitle>
+              <div className="w-full h-16 bg-gradient-to-br from-green-300 via-blue-500 to-purple-600" />
+              <Avatar className="mx-auto -mt-6 h-12 w-12">
+                <AvatarImage src={session.user.image ?? ''} alt="profile picture" />
+                <AvatarFallback>{session.user.name?.charAt(0)}</AvatarFallback>
+              </Avatar>
+            </CardTitle>
 
-          <CardDescription className="text-center text-xl font-bold whitespace-normal truncate">
-            {session.user.name}
-          </CardDescription>
-        </CardHeader>
+            <CardDescription className="text-center text-xl font-bold truncate p-2">
+              {session.user.name}
+            </CardDescription>
+          </CardHeader>
 
-        <CardContent>
-          <ul>
-            {tabs.map((tab) => {
-              const isActive = currentTab?.href === tab.href
+          <CardContent>
+            <ul>
+              {tabs.map((tab) => {
+                const isActive = currentTab?.href === tab.href
 
-              const activeClass = isActive ? 'bg-slate-300 dark:bg-slate-600' : ''
+                const activeClass = isActive ? 'bg-slate-300 dark:bg-slate-600' : ''
 
-              return (
-                <li
-                  key={tab.href}
-                  className={`flex my-1 rounded hover:bg-slate-300 dark:hover:bg-slate-600 ${activeClass}`}
-                >
-                  <a href={tab.href} className="flex items-center px-4 py-2">
-                    <tab.icon className="w-5 h-5" />
-                    <span className="hidden md:inline ml-5">{tab.label}</span>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </CardContent>
-      </Card>
+                return (
+                  <li
+                    key={tab.href}
+                    className={`flex my-1 rounded hover:bg-slate-300 dark:hover:bg-slate-600 ${activeClass}`}
+                  >
+                    <a href={tab.href} className="w-full flex items-center px-4 py-2">
+                      <tab.icon className="w-4 h-4" />
+                      <span className="hidden md:inline ml-5">{tab.label}</span>
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
 
       <div className="w-full">{children}</div>
     </div>

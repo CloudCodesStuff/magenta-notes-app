@@ -1,11 +1,18 @@
 import type { NextPageWithLayout } from '@/types/next'
 import Layout from '../layout'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 const Page: NextPageWithLayout = () => {
   return (
-    <div className="p-10">
-      <h1 className="text-6xl text-center">Drafts: TODO</h1>
-    </div>
+    <Card className="col-span-2 h-fit">
+      <CardHeader>
+        <CardTitle className="text-5xl font-bold">Drafts</CardTitle>
+        <CardDescription>Unpublished work only visible to you</CardDescription>
+        <div className="border" />
+      </CardHeader>
+
+      <CardContent>TODO</CardContent>
+    </Card>
   )
 }
 

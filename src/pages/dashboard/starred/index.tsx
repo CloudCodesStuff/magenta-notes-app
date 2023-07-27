@@ -1,18 +1,21 @@
 import type { NextPageWithLayout } from '@/types/next'
 import Layout from '../layout'
 import { trpc } from '@/lib/trpc'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { StickyNote } from '@/components/sticky-note'
 
 const Page: NextPageWithLayout = () => {
   const query = trpc.notes.getStarredNotesForUser.useQuery()
 
   return (
-    <div className="flex flex-col gap-8 p-10">
-      <div>
-        <h1 className="text-6xl text-center">Starred Items: TODO</h1>
-      </div>
+    <Card className="col-span-2 h-fit">
+      <CardHeader>
+        <CardTitle className="text-5xl font-bold">Starred</CardTitle>
+        <CardDescription>Special notes you took</CardDescription>
+        <div className="border" />
+      </CardHeader>
 
-      <div>
+      <CardContent>
         {query.data?.length ? (
           <div className="flex flex-col gap-4">
             {query.data?.map((note) => <StickyNote key={note.id} {...note} />)}
@@ -20,8 +23,8 @@ const Page: NextPageWithLayout = () => {
         ) : (
           <h3 className="text-center">No Notes Yet!</h3>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
 

@@ -10,7 +10,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <Card className="col-span-2 h-fit">
       <CardHeader>
-        <CardTitle>Recent Notes</CardTitle>
+        <CardTitle className="text-5xl font-bold">Recent Notes</CardTitle>
         <CardDescription>Pick up where you left off</CardDescription>
         <div className="border" />
       </CardHeader>
