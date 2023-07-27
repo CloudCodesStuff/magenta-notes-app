@@ -14,5 +14,7 @@ export async function getStarredNotesforUser(userId: string) {
     },
   })
 
-  return starredNotes
+  const withStars = starredNotes.map((starredNote) => ({ ...starredNote.note, starred: true }))
+
+  return withStars
 }
