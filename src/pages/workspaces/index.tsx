@@ -31,8 +31,8 @@ export default function Page() {
       <div className="max-w-6xl mx-auto flex flex-1 flex-col overflow-hidden">
         <div className="grid items-start gap-8">
           <div className="flex items-center justify-between">
-            <div className="grid gap-1">
-              <h1 className="font-bold text-3xl md:text-4xl">Workspaces</h1>
+            <div>
+              <h1 className="font-bold text-4xl">Workspaces</h1>
               <p className="text-lg text-slate-600 dark:text-slate-300">
                 Create and manage workspaces.
               </p>
