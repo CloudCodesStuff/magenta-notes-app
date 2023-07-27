@@ -1,19 +1,23 @@
-import { useRouter } from 'next/router'
-import { ChevronLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import type { NextPageWithLayout } from '@/types/next'
+import Layout from '../layout'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-export default function Page() {
-  const router = useRouter()
-
+const Page: NextPageWithLayout = () => {
   return (
-    <div className="p-10">
-      <div className="w-full flex">
-        <Button onClick={() => router.back()} variant="secondary">
-          <ChevronLeft className="mr-2 h-4 w-4" />
-          <span>BACK</span>
-        </Button>
-      </div>
-      <h1 className="text-6xl text-center">Teams: TODO</h1>
-    </div>
+    <Card className="col-span-2 h-fit">
+      <CardHeader>
+        <CardTitle className="text-5xl font-bold">Teams</CardTitle>
+        <CardDescription>Collaborate with others</CardDescription>
+        <div className="border" />
+      </CardHeader>
+
+      <CardContent>TODO</CardContent>
+    </Card>
   )
 }
+
+Page.getLayout = (page) => {
+  return <Layout>{page}</Layout>
+}
+
+export default Page

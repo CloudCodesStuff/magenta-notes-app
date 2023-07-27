@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react'
-import { Home, History, Star, Clipboard, Check } from 'lucide-react'
+import { Home, History, Star, Clipboard, Check, PersonStanding } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useRouter } from 'next/router'
@@ -11,6 +11,7 @@ const tabs = [
   { label: 'Starred', href: '/dashboard/starred', icon: Star },
   { label: 'Drafts', href: '/dashboard/drafts', icon: Clipboard },
   { label: 'Tasks', href: '/dashboard/tasks', icon: Check },
+  { label: 'Teams', href: '/dashboard/teams', icon: PersonStanding },
 ]
 
 function findMatchingTab(pathname: string) {
@@ -45,7 +46,7 @@ export default function Layout({ children }: Props) {
         <Card className="h-fit overflow-hidden w-24 md:w-60">
           <CardHeader className="p-0">
             <CardTitle>
-              <div className="w-full h-16 bg-gradient-to-br from-green-300 via-blue-500 to-purple-600" />
+              <div className="w-full h-16 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400" />
               <Avatar className="mx-auto -mt-6 h-12 w-12">
                 <AvatarImage src={session.user.image ?? ''} alt="profile picture" />
                 <AvatarFallback>{session.user.name?.charAt(0)}</AvatarFallback>
