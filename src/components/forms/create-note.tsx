@@ -24,7 +24,7 @@ export interface Props {
 export default function CreateNoteForm(props: Props) {
   const form = useForm<CreateNoteData>({
     resolver: zodResolver(createNoteSchema),
-    mode: 'onBlur',
+    mode: 'onSubmit',
     defaultValues: {
       title: '',
       color: '',

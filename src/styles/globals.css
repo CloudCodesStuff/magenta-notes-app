@@ -68,7 +68,3 @@
     --radius: 0.5rem;
   }
 }
-.dotted{
-  background-image: radial-gradient(gray 1px, transparent 0);
-  background-size: 20px 20px;
-}

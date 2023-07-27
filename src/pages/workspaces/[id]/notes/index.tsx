@@ -1,11 +1,7 @@
-import Link from 'next/link'
 import { useMemo } from 'react'
-import { Pen } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { trpc } from '@/lib/trpc'
-import { formatDate } from '@/lib/formatdate'
 import { Button } from '@/components/ui/button'
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -16,15 +12,8 @@ import {
 } from '@/components/ui/dialog'
 import { Plus } from 'lucide-react'
 import CreateNoteForm from '@/components/forms/create-note'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { MoreVertical } from 'lucide-react'
 import { BreadCrumbs } from '@/components/bread-crumbs'
+import { StickyNote } from '@/components/sticky-note'
 
 export const metadata = {
   title: 'Workspace',
@@ -43,19 +32,7 @@ export default function Page() {
 
   const notes = trpc.notes.getNotesForWorkspace.useQuery(workspaceId)
 
-  const mutation = trpc.notes.deleteNote.useMutation()
-
   const utils = trpc.useContext()
-
-  const handleDelete = (id: string) => {
-    return () => {
-      mutation.mutate(id, {
-        onSuccess() {
-          utils.notes.getNotesForWorkspace.invalidate()
-        },
-      })
-    }
-  }
 
   return (
     <div className="p-10">
@@ -96,60 +73,17 @@ export default function Page() {
 
         <div className="flex flex-1 flex-col overflow-hidden">
           {notes.data?.length ? (
-            <div className="divide-y p-4 flex gap-2 flex-wrap dotted  divide-border rounded-md border">
+            <div
+              className="divide-y p-4 flex gap-4 flex-wrap divide-border rounded-md border"
+              style={{
+                backgroundImage: 'radial-gradient(gray 1px, transparent 0)',
+                backgroundSize: '20px 20px',
+              }}
+            >
               {notes.data.map((note) => (
-                <Card
-                  key={note.id}
-                  className="w-60 bg-background h-60 overflow-hidden justify-between shadow-md relative flex flex-col"
-                >
-                  <CardHeader>
-                    <div
-                      className="p-4 mb-1 w-full"
-                      style={{ backgroundColor: note.color || 'gray' }}
-                    />
-
-                    <div className="flex items-center justify-between">
-                      <CardTitle>{note.title}</CardTitle>
-
-                      <DropdownMenu>
-                        <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
-                          <MoreVertical className="h-4 w-4" />
-                          <span className="sr-only">Open</span>
-                        </DropdownMenuTrigger>
-
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem asChild>
-                            <Link
-                              href={`/workspaces/${workspaceId}/notes/${note.id}`}
-                              className="cursor-pointer"
-                            >
-                              Edit
-                            </Link>
-                          </DropdownMenuItem>
-
-                          <DropdownMenuSeparator />
-
-                          <DropdownMenuItem
-                            className="flex cursor-pointer items-center  text-destructive focus:text-destructive"
-                            onClick={handleDelete(note.id)}
-                          >
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-
-                    <CardDescription>{formatDate(note.createdAt?.toDateString())}</CardDescription>
-                  </CardHeader>
-
-                  <CardFooter>
-                    <Button size="sm" className="ml-auto rounded-full w-10 h-10 p-2 flex" asChild>
-                      <Link href={`/workspaces/${workspaceId}/notes/${note.id}`}>
-                        <Pen className="w-5 h-6" />
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <div key={note.id} className="w-60">
+                  <StickyNote {...note} />
+                </div>
               ))}
             </div>
           ) : (

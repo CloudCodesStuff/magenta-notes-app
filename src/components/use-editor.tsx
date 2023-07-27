@@ -14,6 +14,7 @@ export async function defaultTools() {
   const Code = (await import('@editorjs/code')).default
   const LinkTool = (await import('@editorjs/link')).default
   const InlineCode = (await import('@editorjs/inline-code')).default
+  const Image = (await import('@editorjs/image')).default
 
   return {
     header: Header,
@@ -23,6 +24,7 @@ export async function defaultTools() {
     inlineCode: InlineCode,
     table: Table,
     embed: Embed,
+    image: Image,
   } satisfies Record<string, EditorJS.ToolConstructable | EditorJS.ToolSettings>
 }
 

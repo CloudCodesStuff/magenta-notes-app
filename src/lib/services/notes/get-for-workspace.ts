@@ -10,14 +10,6 @@ export async function getWorkspaceNotes(workspaceId: string) {
     where: {
       workspaceId,
     },
-    select: {
-      id: true,
-      title: true,
-      color: true,
-      content: true,
-      createdAt: true,
-      updatedAt: true,
-    },
     orderBy: {
       updatedAt: 'desc',
     },

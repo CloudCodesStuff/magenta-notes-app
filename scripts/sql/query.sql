@@ -1,0 +1,3 @@
+SHOW TABLES;
+
+SELECT Content FROM Note;

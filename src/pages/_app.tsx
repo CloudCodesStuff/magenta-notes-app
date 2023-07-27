@@ -6,27 +6,28 @@ import { ThemeProvider } from 'next-themes'
 
 import { SessionProvider } from 'next-auth/react'
 import type { Session } from 'next-auth'
-import type { AppProps } from 'next/app'
 import { trpc } from '@/lib/trpc'
 import Nav from '@/components/nav'
 import Footer from '@/components/footer'
 import { Toaster } from '@/components/ui/toaster'
+import type { AppPropsWithLayout } from '@/types/next'
 
-type Props = AppProps<{ session: Session }>
+type Props = AppPropsWithLayout<{ session: Session }>
 
 const inter = Inter({
   subsets: ['latin'],
 })
 
 function App({ Component, pageProps: { session, ...pageProps } }: Props) {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className={inter.className}>
           <Nav />
-          <main className="min-h-screen">
-            <Component {...pageProps} />
-          </main>
+          <main className="min-h-screen">{getLayout(<Component {...pageProps} />)}</main>
           <Footer />
         </div>
         <Toaster />
