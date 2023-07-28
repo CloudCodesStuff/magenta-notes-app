@@ -4,16 +4,31 @@ import { db } from '@/lib/db'
  * Get all the teams that a specific user is on.
  */
 export async function getTeamsForUser(userId: string) {
-  const teamConnections = await db.teamCollaborators.findMany({
+  const teams = await db.team.findMany({
     where: {
-      userId,
+      TeamCollaborators: {
+        some: {
+          userId,
+        },
+      },
     },
     include: {
-      team: true,
+      TeamCollaborators: {
+        include: {
+          user: true,
+        },
+      },
     },
   })
 
-  const teams = teamConnections.map((teamConnection) => teamConnection.team)
+  type TeamWithCollaborators = (typeof teams)[number] & {
+    users?: (typeof teams)[0]['TeamCollaborators'][number]['user'][]
+  }
 
-  return teams
+  const teamsWithUsers = teams.map((team: TeamWithCollaborators) => {
+    team.users = team.TeamCollaborators.map((collaborator) => collaborator.user)
+    return team
+  })
+
+  return teamsWithUsers
 }

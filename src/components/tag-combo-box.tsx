@@ -9,6 +9,7 @@ const multiple: any = true
 export type Tag = RouterOutput['tags']['getAll'][number]
 
 interface Props {
+  initialValue?: Tag[]
   onChange?: (tags: Tag[]) => unknown
 }
 
@@ -17,16 +18,18 @@ interface Props {
  */
 export const TagComboboxInput = forwardRef<HTMLElement, Props>((props: Props = {}, ref) => {
   const query = trpc.tags.getAll.useQuery()
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(props.initialValue ?? [])
   const [input, setInput] = useState('')
 
   const unselectedTags = useMemo(() => {
+    const selectedTagNames = selectedTags.map((tag) => tag.name)
     return query.data?.filter((tag) =>
       input
-        ? tag.name.toLowerCase().includes(input.toLowerCase()) && !selectedTags.includes(tag)
-        : !selectedTags.includes(tag),
+        ? tag.name.toLowerCase().includes(input.toLowerCase()) &&
+          !selectedTagNames.includes(tag.name)
+        : !selectedTagNames.includes(tag.name),
     )
-  }, [query.data, selectedTags, input])
+  }, [query.data, selectedTags, input, props.initialValue])
 
   const handleUnselect = useCallback(
     (tag: Tag) => {

@@ -16,20 +16,28 @@ import {
 import { MoreVertical, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
+type TeamCollaborator = {
+  id: string
+  name?: string | null
+  image?: string | null
+}
+
 export interface TeamCardProps {
   id: string
   name: string
   color?: string | null
   description?: string | null
+
+  users?: TeamCollaborator[]
 }
 
-export function TeamCard(props: TeamCardProps) {
+export function TeamCard(team: TeamCardProps) {
   const utils = trpc.useContext()
 
   const deleteMutation = trpc.teams.deleteTeam.useMutation()
 
   const handleDelete = () => {
-    deleteMutation.mutate(props.id, {
+    deleteMutation.mutate(team.id, {
       onSuccess: () => {
         utils.teams.invalidate()
       },
@@ -40,8 +48,8 @@ export function TeamCard(props: TeamCardProps) {
     <Card>
       <CardHeader className="flex flex-row items-center gap-8 max-w-sm">
         <div>
-          <CardTitle>{props.name}</CardTitle>
-          <CardDescription>{props.description}</CardDescription>
+          <CardTitle>{team.name}</CardTitle>
+          <CardDescription>{team.description}</CardDescription>
         </div>
 
         <DropdownMenu>
@@ -67,7 +75,19 @@ export function TeamCard(props: TeamCardProps) {
         </DropdownMenu>
       </CardHeader>
 
-      <CardContent></CardContent>
+      <CardContent>
+        <h2 className="text-xl font-semibold">Members</h2>
+
+        <div className="border my-2" />
+
+        <ul>
+          {team.users?.map((user) => (
+            <li key={user.id} className="flex items-center gap-2">
+              <h3 className="text-sm font-bold">{user.name}</h3>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
 
       <CardFooter></CardFooter>
     </Card>

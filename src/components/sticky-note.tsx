@@ -135,9 +135,7 @@ export function StickyNote(props: Props) {
                 <DialogDescription>Edit the initial settings</DialogDescription>
               </DialogHeader>
               <UpdateNoteForm
-                id={props.id}
-                title={props.title}
-                color={props.color}
+                {...props}
                 onSuccess={() => {
                   utils.notes.invalidate()
                 }}
