@@ -31,7 +31,13 @@ export default function CreateTeamForm(props: Props) {
     },
   })
 
-  const mutation = trpc.teams.createTeam.useMutation()
+  const utils = trpc.useContext()
+
+  const mutation = trpc.teams.createTeam.useMutation({
+    onSuccess() {
+      utils.teams.invalidate()
+    },
+  })
 
   const onSubmit = form.handleSubmit(async (data) => {
     mutation.mutate(data, {

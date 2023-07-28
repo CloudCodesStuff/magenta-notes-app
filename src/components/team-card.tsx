@@ -88,7 +88,6 @@ export function TeamCard(team: TeamCardProps) {
                 <DialogDescription>Edit the initial settings</DialogDescription>
               </DialogHeader>
               <UpdateTeamMembersForm
-                teamId={team.id}
                 initialValue={team.users}
                 onSubmit={async (users) => {
                   updateMutation.mutate({

@@ -15,7 +15,6 @@ export type User = {
 
 interface Props {
   initialValue?: User[]
-  teamId: string
   onChange?: (users: User[]) => unknown
   onSubmit?: (users: User[]) => unknown
 }
