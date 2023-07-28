@@ -12,17 +12,22 @@ export async function getWorkspaceNotes(workspaceId: string) {
     },
     include: {
       StarredNote: true,
+      NoteTags: {
+        include: {
+          tag: true,
+        },
+      },
     },
     orderBy: {
       updatedAt: 'desc',
     },
   })
 
-  const withStarredNotes = allNotes.map((note) => {
-    return {
-      ...note,
-      starred: note.StarredNote.length > 0,
-    }
+  type NoteWithStar = (typeof allNotes)[number] & { starred?: boolean }
+
+  const withStarredNotes = allNotes.map((note: NoteWithStar) => {
+    note.starred = note.StarredNote.length > 0
+    return note
   })
 
   return withStarredNotes

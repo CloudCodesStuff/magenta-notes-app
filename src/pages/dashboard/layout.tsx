@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react'
-import { Home, History, Star, Clipboard, Check, PersonStanding } from 'lucide-react'
+import { Home, History, Star, Tag, PersonStanding } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useRouter } from 'next/router'
@@ -9,8 +9,7 @@ const tabs = [
   { label: 'Overview', href: '/dashboard', icon: Home },
   { label: 'Recent', href: '/dashboard/recent', icon: History },
   { label: 'Starred', href: '/dashboard/starred', icon: Star },
-  { label: 'Drafts', href: '/dashboard/drafts', icon: Clipboard },
-  { label: 'Tasks', href: '/dashboard/tasks', icon: Check },
+  { label: 'Tags', href: '/dashboard/tags', icon: Tag },
   { label: 'Teams', href: '/dashboard/teams', icon: PersonStanding },
 ]
 

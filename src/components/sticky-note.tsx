@@ -19,6 +19,8 @@ import { Pen, MoreVertical, Star, Plus, Trash2 } from 'lucide-react'
 import { trpc } from '@/lib/trpc'
 import { useMemo } from 'react'
 import UpdateNoteForm from './forms/update-note'
+import type { Tag } from './tag-combo-box'
+import { Badge } from './ui/badge'
 
 export interface Props {
   id: string
@@ -27,10 +29,10 @@ export interface Props {
   title: string
   color?: string | null
   updatedAt: Date
-  tags?: string[]
+  tags?: Tag[]
 }
 
-export function StickyNote(note: Props) {
+export function StickyNote(props: Props) {
   const deleteMutation = trpc.notes.deleteNote.useMutation()
 
   const starMutation = trpc.notes.starNote.useMutation()
@@ -50,8 +52,8 @@ export function StickyNote(note: Props) {
   const toggleStar = () => {
     starMutation.mutate(
       {
-        noteId: note.id,
-        starred: !note.starred,
+        noteId: props.id,
+        starred: !props.starred,
       },
       {
         onSuccess() {
@@ -62,22 +64,22 @@ export function StickyNote(note: Props) {
   }
 
   const color = useMemo(() => {
-    return fontColorContrast(note.color || 'gray')
-  }, [note.color])
+    return fontColorContrast(props.color || 'gray')
+  }, [props.color])
 
   const hover = useMemo(() => {
-    const contrastColor = fontColorContrast(note.color || 'gray')
+    const contrastColor = fontColorContrast(props.color || 'gray')
     return contrastColor === '#000000' ? 'hover:bg-muted' : 'hover:bg-slate-500'
-  }, [note.color])
+  }, [props.color])
 
   const starredClasses = useMemo(() => {
-    return note.starred ? `fill-yellow-500 hover:fill-transparent` : `hover:fill-yellow-500`
-  }, [note.starred])
+    return props.starred ? `fill-yellow-500 hover:fill-transparent` : `hover:fill-yellow-500`
+  }, [props.starred])
 
   return (
-    <Card style={{ backgroundColor: note.color || 'gray', borderColor: note.color || 'gray' }}>
+    <Card style={{ backgroundColor: props.color || 'gray', borderColor: props.color || 'gray' }}>
       <CardHeader className="flex flex-row gap-2 items-center justify-between" style={{ color }}>
-        <CardTitle className="truncate py-2">{note.title}</CardTitle>
+        <CardTitle className="truncate py-2">{props.title}</CardTitle>
 
         <button className="" onClick={toggleStar}>
           <Star className={starredClasses} />
@@ -85,9 +87,25 @@ export function StickyNote(note: Props) {
       </CardHeader>
 
       <CardContent>
+        <div className="flex flex-wrap gap-2 p-2">
+          {props.tags?.map((tag) => {
+            const color = tag.color ?? 'gray'
+            const contrastColor = fontColorContrast(color)
+            return (
+              <Badge
+                key={tag.id}
+                color={color}
+                className="text-sm"
+                style={{ color: contrastColor }}
+              >
+                {tag.name}
+              </Badge>
+            )
+          })}
+        </div>
         <div className="flex flex-wrap gap-2 justify-between" style={{ color }}>
-          <p className="truncate">{note.updatedAt.toLocaleTimeString('en-us')}</p>
-          <p className="truncate">{note.updatedAt.toLocaleDateString('en-us')}</p>
+          <p className="truncate">{props.updatedAt.toLocaleTimeString('en-us')}</p>
+          <p className="truncate">{props.updatedAt.toLocaleDateString('en-us')}</p>
         </div>
       </CardContent>
 
@@ -117,9 +135,9 @@ export function StickyNote(note: Props) {
                 <DialogDescription>Edit the initial settings</DialogDescription>
               </DialogHeader>
               <UpdateNoteForm
-                id={note.id}
-                title={note.title}
-                color={note.color}
+                id={props.id}
+                title={props.title}
+                color={props.color}
                 onSuccess={() => {
                   utils.notes.invalidate()
                 }}
@@ -131,7 +149,7 @@ export function StickyNote(note: Props) {
             <DropdownMenuItem asChild>
               <Button variant="ghost" asChild>
                 <Link
-                  href={`/workspaces/${note.workspaceId}/notes/${note.id}`}
+                  href={`/workspaces/${props.workspaceId}/notes/${props.id}`}
                   className="cursor-pointer"
                 >
                   <Pen className="mr-2 h-4 w-4" />
@@ -144,7 +162,7 @@ export function StickyNote(note: Props) {
 
             <DropdownMenuItem asChild>
               <Button
-                onClick={handleDelete(note.id)}
+                onClick={handleDelete(props.id)}
                 variant="destructive"
                 className="w-full cursor-pointer"
               >
@@ -156,7 +174,7 @@ export function StickyNote(note: Props) {
         </DropdownMenu>
 
         <Button size="sm" className="ml-auto rounded-full w-10 h-10 p-2 flex" asChild>
-          <Link href={`/workspaces/${note.workspaceId}/notes/${note.id}`}>
+          <Link href={`/workspaces/${props.workspaceId}/notes/${props.id}`}>
             <Pen className="w-5 h-6" />
           </Link>
         </Button>

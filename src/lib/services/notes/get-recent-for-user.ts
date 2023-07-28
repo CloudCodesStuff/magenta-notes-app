@@ -23,6 +23,11 @@ export async function getRecentNotesForUser(userId: string) {
           userId,
         },
       },
+      NoteTags: {
+        include: {
+          tag: true,
+        },
+      },
     },
     orderBy: {
       updatedAt: 'desc',
@@ -30,10 +35,14 @@ export async function getRecentNotesForUser(userId: string) {
     take: 10,
   })
 
-  type NoteWithStar = (typeof allNotes)[number] & { starred?: boolean }
+  type NoteWithStar = (typeof allNotes)[number] & {
+    starred?: boolean
+    tags?: (typeof allNotes)[number]['NoteTags'][number]['tag'][]
+  }
 
   const withStarredNotes = allNotes.map((note: NoteWithStar) => {
     note.starred = note.StarredNote.length > 0
+    note.tags = note.NoteTags.map((noteTag) => noteTag.tag)
     return note
   })
 
