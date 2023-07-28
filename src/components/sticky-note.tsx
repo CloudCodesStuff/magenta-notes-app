@@ -118,6 +118,8 @@ export function StickyNote(note: Props) {
               </DialogHeader>
               <UpdateNoteForm
                 id={note.id}
+                title={note.title}
+                color={note.color}
                 onSuccess={() => {
                   utils.notes.invalidate()
                 }}

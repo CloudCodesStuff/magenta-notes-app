@@ -1,3 +1,4 @@
+import { SketchPicker } from 'react-color'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -65,7 +66,12 @@ export default function CreateNoteForm(props: Props) {
             <FormItem>
               <FormLabel>Color</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <SketchPicker
+                  color={field.value}
+                  onChange={(color) => {
+                    field.onChange(color.hex)
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

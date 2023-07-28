@@ -1,3 +1,4 @@
+import { SketchPicker } from 'react-color'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -18,6 +19,8 @@ type MutationOutput = RouterOutput['notes']['updateNote']
 
 export interface Props {
   id: string
+  title?: string
+  color?: string | null
   onError?: (error: unknown, variables: unknown, context: unknown) => void
   onSuccess?: (data: MutationOutput, variables: unknown, context: unknown) => void
 }
@@ -28,8 +31,8 @@ export default function UpdateNoteForm(props: Props) {
     mode: 'onSubmit',
     defaultValues: {
       id: props.id,
-      title: '',
-      color: '',
+      title: props.title ?? '',
+      color: props.color ?? '',
     },
   })
 
@@ -66,7 +69,12 @@ export default function UpdateNoteForm(props: Props) {
             <FormItem>
               <FormLabel>Color</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <SketchPicker
+                  color={field.value}
+                  onChange={(color) => {
+                    field.onChange(color.hex)
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
