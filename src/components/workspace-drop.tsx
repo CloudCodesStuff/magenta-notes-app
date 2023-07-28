@@ -88,7 +88,7 @@ export function DeleteWorkspace({ workspaceId }: Props) {
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want to delete this post?</AlertDialogTitle>
+            <AlertDialogTitle>Are you sure you want to delete this workspace?</AlertDialogTitle>
             <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

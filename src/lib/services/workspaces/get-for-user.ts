@@ -18,9 +18,19 @@ export async function getUserWorkspaces(userId: string) {
     },
   })
 
-  const workspaces = workspaceCollaborations.map((collaboration) => {
+  const ownedWorkspaces = await db.workspace.findMany({
+    where: { userId },
+  })
+
+  const collaborationWorkspaces = workspaceCollaborations.map((collaboration) => {
     return collaboration.workspace
   })
 
-  return workspaces
+  const notOwnedCollaborationWorkspaces = collaborationWorkspaces.filter((workspace) => {
+    return workspace.userId !== userId
+  })
+
+  const allWorkspaces = [...ownedWorkspaces, ...notOwnedCollaborationWorkspaces]
+
+  return allWorkspaces
 }
