@@ -29,7 +29,7 @@ export const TagComboboxInput = forwardRef<HTMLElement, Props>((props: Props = {
           !selectedTagNames.includes(tag.name)
         : !selectedTagNames.includes(tag.name),
     )
-  }, [query.data, selectedTags, input, props.initialValue])
+  }, [query.data, selectedTags, input])
 
   const handleUnselect = useCallback(
     (tag: Tag) => {
@@ -39,7 +39,7 @@ export const TagComboboxInput = forwardRef<HTMLElement, Props>((props: Props = {
         return newSelectedTags
       })
     },
-    [setSelectedTags],
+    [setSelectedTags, props],
   )
 
   const handleChange = useCallback(
@@ -47,7 +47,7 @@ export const TagComboboxInput = forwardRef<HTMLElement, Props>((props: Props = {
       setSelectedTags(tags)
       props.onChange?.(tags)
     },
-    [setSelectedTags],
+    [setSelectedTags, props],
   )
 
   return (

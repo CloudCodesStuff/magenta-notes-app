@@ -19,7 +19,7 @@ export function CreateTagForm() {
         },
       })
     },
-    [mutation],
+    [mutation, utils.tags],
   )
 
   return (

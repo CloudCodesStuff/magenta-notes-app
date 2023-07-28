@@ -62,7 +62,7 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
         }, debounceDuration)
       }
     },
-    [setInput, setUsers],
+    [setInput, setUsers, utils.users.searchUserByName],
   )
 
   const unselectedUsers = useMemo(() => {
@@ -74,7 +74,7 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
           !selectedTagNames.includes(user.name)
         : !selectedTagNames.includes(user.name),
     )
-  }, [users, selectedUsers, input, props.initialValue])
+  }, [users, selectedUsers, input])
 
   const handleUnselect = useCallback(
     (tag: User) => {
@@ -84,7 +84,7 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
         return newSelectedTags
       })
     },
-    [setSelectedUsers],
+    [setSelectedUsers, props],
   )
 
   const handleChange = useCallback(
@@ -92,7 +92,7 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
       setSelectedUsers(users)
       props.onChange?.(users)
     },
-    [setSelectedUsers, props.onChange],
+    [setSelectedUsers, props],
   )
 
   const handleSubmit = useCallback(
@@ -100,7 +100,7 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
       event.preventDefault()
       props.onSubmit?.(selectedUsers)
     },
-    [props.onSubmit, selectedUsers],
+    [props, selectedUsers],
   )
 
   return (
