@@ -1,14 +1,7 @@
 import { useRouter } from 'next/router'
 import { Button } from '@/components/ui/button'
 import { BreadCrumbs } from '@/components/bread-crumbs'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   DialogDescription,
   DialogHeader,
@@ -108,8 +101,6 @@ export default function Page() {
             ))}
           </ul>
         </CardContent>
-
-        <CardFooter></CardFooter>
       </Card>
     </div>
   )

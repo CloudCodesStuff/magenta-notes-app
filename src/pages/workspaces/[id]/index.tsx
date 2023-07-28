@@ -15,6 +15,7 @@ import { Plus, ChevronRight } from 'lucide-react'
 import CreateNoteForm from '@/components/forms/create-note'
 import { BreadCrumbs } from '@/components/bread-crumbs'
 import { StickyNote } from '@/components/sticky-note'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export const metadata = {
   title: 'Workspace',
@@ -27,13 +28,15 @@ export default function Page() {
     return router.query.id?.toString()
   }, [router.query.id])
 
+  const notes = trpc.notes.getNotesForWorkspace.useQuery(workspaceId ?? '')
+
+  const workspace = trpc.workspaces.getById.useQuery(workspaceId ?? '')
+
+  const utils = trpc.useContext()
+
   if (workspaceId == null) {
     return <p>Error</p>
   }
-
-  const notes = trpc.notes.getNotesForWorkspace.useQuery(workspaceId)
-
-  const utils = trpc.useContext()
 
   return (
     <div className="p-10">
@@ -107,7 +110,7 @@ export default function Page() {
 
       <div className="my-8" />
 
-      <div className="flex flex-col gap-4 justify-center">
+      <div className="max-w-6xl mx-auto flex flex-col gap-4 justify-center">
         <Button asChild variant="ghost" className="py-8">
           <Link href={`/workspaces/${workspaceId}/collaborators`}>
             <span className="text-5xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-tr from-stone-400 via-yellow-600 to-purple-800">
@@ -117,7 +120,33 @@ export default function Page() {
           </Link>
         </Button>
 
-        <div>TODO</div>
+        <div>
+          <ul className="flex flex-wrap gap-4">
+            {workspace.data?.collaborators.map((collaborator) => (
+              <li key={collaborator.userId} className="w-60">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="font-bold truncate">{collaborator.user.name}</CardTitle>
+                    <CardDescription>{collaborator.user.email}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {collaborator.user.image && (
+                      <div className="flex justify-center items-center">
+                        <img
+                          src={collaborator.user.image}
+                          alt="profile picture"
+                          width="69"
+                          height="69"
+                          className="rounded-xl"
+                        ></img>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )
