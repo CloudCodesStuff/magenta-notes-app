@@ -33,9 +33,11 @@ export const TagComboboxInput = forwardRef<HTMLElement, Props>((props: Props = {
 
   const handleUnselect = useCallback(
     (tag: Tag) => {
-      setSelectedTags((currentSelectedTags) =>
-        currentSelectedTags.filter((p) => p.name !== tag.name),
-      )
+      setSelectedTags((currentSelectedTags) => {
+        const newSelectedTags = currentSelectedTags.filter((p) => p.name !== tag.name)
+        props.onChange?.(newSelectedTags)
+        return newSelectedTags
+      })
     },
     [setSelectedTags],
   )

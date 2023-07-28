@@ -12,7 +12,18 @@ interface ExistingTag extends Tag {
 
 export async function updateNote(updatedData: updateNoteUserData, userId: string) {
   const { tags, ...data } = updatedData
-  const updatedNote = await db.note.update({ where: { id: data.id }, data })
+
+  const updatedNote = await db.note.update({
+    where: { id: data.id },
+    data,
+    include: {
+      NoteTags: {
+        include: {
+          tag: true,
+        },
+      },
+    },
+  })
 
   if (tags?.length) {
     const newTags = tags.filter((tag) => tag.id == null)
@@ -23,6 +34,12 @@ export async function updateNote(updatedData: updateNoteUserData, userId: string
     )
 
     const tagsToConnect = [...createdTags, ...existingTags]
+
+    const tagNamesToConnect = tagsToConnect.map((tag) => tag.name)
+
+    const tagsToDelete = updatedNote.NoteTags.filter((noteTag) => {
+      return !tagNamesToConnect.includes(noteTag.tag.name)
+    })
 
     await db.$transaction(
       tagsToConnect.map((tag) =>
@@ -40,6 +57,19 @@ export async function updateNote(updatedData: updateNoteUserData, userId: string
           update: {
             noteId: updatedNote.id,
             tagId: tag.id,
+          },
+        }),
+      ),
+    )
+
+    await db.$transaction(
+      tagsToDelete.map((tag) =>
+        db.noteTags.delete({
+          where: {
+            noteId_tagId: {
+              noteId: updatedNote.id,
+              tagId: tag.tagId,
+            },
           },
         }),
       ),
