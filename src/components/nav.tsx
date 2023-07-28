@@ -10,9 +10,9 @@ import {
   NavigationMenuItem,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
-import ThemeToggle from './theme-toggle'
-import { Pacifico } from 'next/font/google'
+import { ThemeToggle } from './theme-toggle'
 import { useMemo } from 'react'
+import { Pacifico } from 'next/font/google'
 
 const dancingScript = Pacifico({ subsets: ['latin'], weight: '400' })
 

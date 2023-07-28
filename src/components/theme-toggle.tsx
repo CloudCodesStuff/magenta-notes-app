@@ -18,7 +18,7 @@ const themes = [
   { label: 'System', value: 'system', icon: Laptop },
 ]
 
-export default function ThemeToggle() {
+export function ThemeToggle() {
   const { setTheme } = useTheme()
 
   return (

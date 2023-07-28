@@ -8,7 +8,7 @@ import { SessionProvider } from 'next-auth/react'
 import type { Session } from 'next-auth'
 import { trpc } from '@/lib/trpc'
 import Nav from '@/components/nav'
-import Footer from '@/components/footer'
+import { Footer } from '@/components/footer'
 import { Toaster } from '@/components/ui/toaster'
 import type { AppPropsWithLayout } from '@/types/next'
 
