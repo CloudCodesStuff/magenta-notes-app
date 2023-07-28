@@ -1,9 +1,15 @@
 import { z } from 'zod'
 
 export const updateNoteSchema = z.object({
-  id: z.string(),
-  color: z.string().optional(),
-  content: z.any().optional(),
+  id: z.string().default(''),
+  title: z
+    .string()
+    .optional()
+    .transform((value) => value || undefined),
+  color: z
+    .string()
+    .optional()
+    .transform((value) => value || undefined),
 })
 
-export type updateNoteData = z.infer<typeof updateNoteSchema>
+export type UpdateNoteInput = z.infer<typeof updateNoteSchema>

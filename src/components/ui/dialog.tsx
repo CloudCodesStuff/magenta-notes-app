@@ -3,6 +3,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { DropdownMenuItem } from '../dropdown-menu'
 
 const Dialog = DialogPrimitive.Root
 
@@ -98,3 +99,44 @@ export {
   DialogTitle,
   DialogDescription,
 }
+
+interface DialogItemProps {
+  triggerChildren?: React.ReactNode
+  children?: React.ReactNode
+}
+
+/**
+ * I have no idea how this works ...
+ * @see https://codesandbox.io/embed/r9sq1q
+ * @see https://github.com/radix-ui/primitives/issues/1836
+ */
+export const DropdownMenuDialogItem = React.forwardRef<HTMLDivElement, DialogItemProps>(
+  (props, forwardedRef) => {
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          <DropdownMenuItem
+            ref={forwardedRef}
+            onSelect={(event) => {
+              event.preventDefault()
+            }}
+          >
+            {props.triggerChildren}
+          </DropdownMenuItem>
+        </DialogTrigger>
+        <DialogPortal>
+          <DialogOverlay />
+          <DialogContent>
+            {props.children}
+            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </DialogPrimitive.Close>
+          </DialogContent>
+        </DialogPortal>
+      </Dialog>
+    )
+  },
+)
+
+DropdownMenuDialogItem.displayName = 'DropdownMenuDialogItem'

@@ -1,7 +1,7 @@
 import { db } from '@/lib/db'
-import { updateNoteData } from '@/lib/schemas/update-note'
+import { UpdateNoteInput } from '@/lib/schemas/update-note'
 
-export interface updateNoteUserData extends updateNoteData {
+export interface updateNoteUserData extends UpdateNoteInput {
   id: string
 }
 

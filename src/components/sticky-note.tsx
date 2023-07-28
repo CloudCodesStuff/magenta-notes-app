@@ -9,9 +9,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Pen, MoreVertical, Star } from 'lucide-react'
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DropdownMenuDialogItem,
+} from '@/components/ui/dialog'
+import { Pen, MoreVertical, Star, Plus, Trash2 } from 'lucide-react'
 import { trpc } from '@/lib/trpc'
 import { useMemo } from 'react'
+import UpdateNoteForm from './forms/update-note'
 
 export interface Props {
   id: string
@@ -97,22 +104,51 @@ export function StickyNote(note: Props) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
+            <DropdownMenuDialogItem
+              triggerChildren={
+                <Button variant="ghost">
+                  <Plus className="mr-2 h-4 w-4" />
+                  <span>Update Note</span>
+                </Button>
+              }
+            >
+              <DialogHeader>
+                <DialogTitle>Update Note</DialogTitle>
+                <DialogDescription>Edit the initial settings</DialogDescription>
+              </DialogHeader>
+              <UpdateNoteForm
+                id={note.id}
+                onSuccess={() => {
+                  utils.notes.invalidate()
+                }}
+              />
+            </DropdownMenuDialogItem>
+
+            <DropdownMenuSeparator />
+
             <DropdownMenuItem asChild>
-              <Link
-                href={`/workspaces/${note.workspaceId}/notes/${note.id}`}
-                className="cursor-pointer"
-              >
-                Edit
-              </Link>
+              <Button variant="ghost" asChild>
+                <Link
+                  href={`/workspaces/${note.workspaceId}/notes/${note.id}`}
+                  className="cursor-pointer"
+                >
+                  <Pen className="mr-2 h-4 w-4" />
+                  <span>Edit Content</span>
+                </Link>
+              </Button>
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem
-              className="flex cursor-pointer items-center  text-destructive focus:text-destructive"
-              onClick={handleDelete(note.id)}
-            >
-              Delete
+            <DropdownMenuItem asChild>
+              <Button
+                onClick={handleDelete(note.id)}
+                variant="destructive"
+                className="w-full cursor-pointer"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                <span>Delete</span>
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
