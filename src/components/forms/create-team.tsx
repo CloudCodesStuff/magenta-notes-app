@@ -1,4 +1,3 @@
-import { SketchPicker } from 'react-color'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -11,30 +10,28 @@ import {
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { createNoteSchema, type CreateNoteData } from '@/lib/schemas/create-note'
+import { createTeamSchema, type CreateTeamInput } from '@/lib/schemas/create-team'
 import { trpc, type RouterOutput } from '@/lib/trpc'
 import { Loader2 } from 'lucide-react'
 
-type MutationOutput = RouterOutput['notes']['createNote']
+type MutationOutput = RouterOutput['teams']['createTeam']
 
 export interface Props {
-  workspaceId: string
   onError?: (error: unknown, variables: unknown, context: unknown) => void
   onSuccess?: (data: MutationOutput, variables: unknown, context: unknown) => void
 }
 
-export default function CreateNoteForm(props: Props) {
-  const form = useForm<CreateNoteData>({
-    resolver: zodResolver(createNoteSchema),
+export default function CreateTeamForm(props: Props) {
+  const form = useForm<CreateTeamInput>({
+    resolver: zodResolver(createTeamSchema),
     mode: 'onSubmit',
     defaultValues: {
-      title: '',
-      color: '',
-      workspaceId: props.workspaceId,
+      name: '',
+      description: '',
     },
   })
 
-  const mutation = trpc.notes.createNote.useMutation()
+  const mutation = trpc.teams.createTeam.useMutation()
 
   const onSubmit = form.handleSubmit(async (data) => {
     mutation.mutate(data, {
@@ -48,10 +45,10 @@ export default function CreateNoteForm(props: Props) {
       <form onSubmit={onSubmit} className="space-y-8">
         <FormField
           control={form.control}
-          name="title"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Team Name</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -62,27 +59,16 @@ export default function CreateNoteForm(props: Props) {
 
         <FormField
           control={form.control}
-          name="color"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Color</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
-                <SketchPicker
-                  color={field.value}
-                  onChange={(color) => {
-                    field.onChange(color.hex)
-                  }}
-                />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        />
-
-        <FormField
-          control={form.control}
-          name="workspaceId"
-          render={({ field }) => <Input {...field} type="hidden" />}
         />
 
         <Button type="submit">
