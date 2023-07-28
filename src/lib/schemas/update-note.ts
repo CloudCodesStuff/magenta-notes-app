@@ -10,6 +10,7 @@ export const updateNoteSchema = z.object({
     .string()
     .optional()
     .transform((value) => value || undefined),
+  content: z.any().optional(),
 })
 
 export type UpdateNoteInput = z.infer<typeof updateNoteSchema>
