@@ -33,19 +33,23 @@ export interface Props {
 }
 
 export function StickyNote(props: Props) {
-  const deleteMutation = trpc.notes.deleteNote.useMutation()
+  const deleteMutation = trpc.notes.deleteNote.useMutation({
+    onSuccess() {
+      utils.notes.invalidate()
+    },
+  })
 
-  const starMutation = trpc.notes.starNote.useMutation()
+  const starMutation = trpc.notes.starNote.useMutation({
+    onSuccess() {
+      utils.notes.invalidate()
+    },
+  })
 
   const utils = trpc.useContext()
 
   const handleDelete = (id: string) => {
     return () => {
-      deleteMutation.mutate(id, {
-        onSuccess() {
-          utils.notes.getNotesForWorkspace.invalidate()
-        },
-      })
+      deleteMutation.mutate(id)
     }
   }
 
