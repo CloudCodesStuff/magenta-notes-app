@@ -12,9 +12,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { MoreVertical, Trash2 } from 'lucide-react'
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DropdownMenuDialogItem,
+} from '@/components/ui/dialog'
+import { MoreVertical, Trash2, PenBox } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { UpdateTeamMembersForm } from './forms/update-team'
 
 type TeamCollaborator = {
   id: string
@@ -34,14 +42,20 @@ export interface TeamCardProps {
 export function TeamCard(team: TeamCardProps) {
   const utils = trpc.useContext()
 
-  const deleteMutation = trpc.teams.deleteTeam.useMutation()
+  const updateMutation = trpc.teams.updateTeam.useMutation({
+    onSuccess() {
+      utils.teams.invalidate()
+    },
+  })
+
+  const deleteMutation = trpc.teams.deleteTeam.useMutation({
+    onSuccess: () => {
+      utils.teams.invalidate()
+    },
+  })
 
   const handleDelete = () => {
-    deleteMutation.mutate(team.id, {
-      onSuccess: () => {
-        utils.teams.invalidate()
-      },
-    })
+    deleteMutation.mutate(team.id)
   }
 
   return (
@@ -61,6 +75,32 @@ export function TeamCard(team: TeamCardProps) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
+            <DropdownMenuDialogItem
+              triggerChildren={
+                <Button variant="ghost">
+                  <PenBox className="mr-2 h-4 w-4" />
+                  <span>Update Team</span>
+                </Button>
+              }
+            >
+              <DialogHeader>
+                <DialogTitle>Update Note</DialogTitle>
+                <DialogDescription>Edit the initial settings</DialogDescription>
+              </DialogHeader>
+              <UpdateTeamMembersForm
+                teamId={team.id}
+                initialValue={team.users}
+                onSubmit={async (users) => {
+                  updateMutation.mutate({
+                    teamId: team.id,
+                    userIds: users.map((user) => user.id),
+                  })
+                }}
+              />
+            </DropdownMenuDialogItem>
+
+            <DropdownMenuSeparator />
+
             <DropdownMenuItem asChild>
               <Button
                 onClick={handleDelete}

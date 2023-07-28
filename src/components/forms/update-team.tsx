@@ -1,57 +1,107 @@
-import { forwardRef, useCallback, useMemo, useState } from 'react'
+import { forwardRef, useCallback, useMemo, useState, ChangeEvent, useEffect } from 'react'
 import { Combobox } from '@headlessui/react'
 import { Badge } from '@/components/ui/badge'
-import { RouterOutput, trpc } from '@/lib/trpc'
+import { trpc } from '@/lib/trpc'
+import { Button } from '@/components/ui/button'
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const multiple: any = true
 
-export type User = NonNullable<NonNullable<RouterOutput['teams']['getTeamById']>['users']>[number]
+export type User = {
+  id: string
+  name?: string | null
+  image?: string | null
+}
 
 interface Props {
   initialValue?: User[]
   teamId: string
   onChange?: (users: User[]) => unknown
+  onSubmit?: (users: User[]) => unknown
 }
+
+let activeDebounce: ReturnType<typeof setTimeout> | undefined = undefined
+
+let latestInput: string = ''
+
+const debounceDuration = 500
 
 /**
  * Sets the members working on this team.
  */
 export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Props, ref) => {
-  const [selectedUsers, setSelectedTags] = useState<User[]>(props.initialValue ?? [])
+  const [selectedUsers, setSelectedUsers] = useState<User[]>(props.initialValue ?? [])
 
   const [input, setInput] = useState('')
 
-  const query = trpc.users.searchUserByName.useQuery(input)
+  /**
+   * All users on website.
+   */
+  const [users, setUsers] = useState<User[]>([])
+
+  const utils = trpc.useContext()
+
+  /**
+   * Once on mount, initialize the users to autocomplete.
+   */
+  useEffect(() => {
+    utils.users.searchUserByName.fetch('').then((users) => setUsers(users))
+  }, [utils, setUsers])
+
+  const handleInput = useCallback(
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      setInput(event.target.value)
+
+      latestInput = event.target.value
+
+      if (activeDebounce != null) {
+        return
+      } else {
+        activeDebounce = setTimeout(async () => {
+          activeDebounce = undefined
+          setUsers(await utils.users.searchUserByName.fetch(latestInput))
+        }, debounceDuration)
+      }
+    },
+    [setInput, setUsers],
+  )
 
   const unselectedUsers = useMemo(() => {
     const selectedTagNames = selectedUsers.map((tag) => tag.name)
 
-    return query.data?.filter((user) =>
+    return users.filter((user) =>
       input
         ? user.name?.toLowerCase().includes(input.toLowerCase()) &&
           !selectedTagNames.includes(user.name)
         : !selectedTagNames.includes(user.name),
     )
-  }, [query.data, selectedUsers, input, props.initialValue])
+  }, [users, selectedUsers, input, props.initialValue])
 
   const handleUnselect = useCallback(
     (tag: User) => {
-      setSelectedTags((currentSelectedTags) => {
+      setSelectedUsers((currentSelectedTags) => {
         const newSelectedTags = currentSelectedTags.filter((p) => p.name !== tag.name)
         props.onChange?.(newSelectedTags)
         return newSelectedTags
       })
     },
-    [setSelectedTags],
+    [setSelectedUsers],
   )
 
   const handleChange = useCallback(
-    (tags: User[]) => {
-      setSelectedTags(tags)
-      props.onChange?.(tags)
+    (users: User[]) => {
+      setSelectedUsers(users)
+      props.onChange?.(users)
     },
-    [setSelectedTags],
+    [setSelectedUsers, props.onChange],
+  )
+
+  const handleSubmit = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault()
+      props.onSubmit?.(selectedUsers)
+    },
+    [props.onSubmit, selectedUsers],
   )
 
   return (
@@ -65,7 +115,7 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
         ref={ref}
       >
         {selectedUsers.length > 0 && (
-          <ul className="m-2 p-2 flex gap-2">
+          <ul className="my-2 flex gap-2">
             {selectedUsers.map((person, index) => (
               <li key={person.id ?? index}>
                 <Badge onClick={() => handleUnselect(person)}>{person.name}</Badge>
@@ -78,7 +128,7 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
         <Combobox.Button as="div">
           <Combobox.Input
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            onChange={(event) => setInput(event.target.value)}
+            onChange={handleInput}
           />
         </Combobox.Button>
 
@@ -94,6 +144,9 @@ export const UpdateTeamMembersForm = forwardRef<HTMLElement, Props>((props: Prop
           ))}
         </Combobox.Options>
       </Combobox>
+      <Button onClick={handleSubmit} type="button" className="my-4">
+        Submit
+      </Button>
     </div>
   )
 })

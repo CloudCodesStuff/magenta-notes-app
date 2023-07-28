@@ -6,6 +6,7 @@ import { createTeamSchema } from '@/lib/schemas/create-team'
 import { createTeam } from '@/lib/services/teams/create'
 import { deleteTeam } from '@/lib/services/teams/delete-team'
 import { getTeamById } from '@/lib/services/teams/get-by-id'
+import { updateTeam } from '@/lib/services/teams/update'
 
 const teamsRouter = router({
   getCurrentUserTeams: procedure.use(isAuthenticated).query(async (opts) => {
@@ -26,6 +27,19 @@ const teamsRouter = router({
     .input(createTeamSchema)
     .mutation(async (opts) => {
       const result = await createTeam(opts.input, opts.ctx.session.user.id)
+      return result
+    }),
+
+  updateTeam: procedure
+    .use(isAuthenticated)
+    .input(
+      z.object({
+        teamId: z.string(),
+        userIds: z.string().array(),
+      }),
+    )
+    .mutation(async (opts) => {
+      const result = await updateTeam(opts.input)
       return result
     }),
 

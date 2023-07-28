@@ -18,7 +18,7 @@ import { TeamCard } from '@/components/team-card'
 const Page: NextPageWithLayout = () => {
   const query = trpc.teams.getCurrentUserTeams.useQuery()
 
-  const utils = trpc.useContext()
+  console.log(query.data)
 
   return (
     <Card className="col-span-2 h-fit">
@@ -43,11 +43,7 @@ const Page: NextPageWithLayout = () => {
                   Touch grass and find friends: impossible challenge
                 </DialogDescription>
               </DialogHeader>
-              <CreateTeamForm
-                onSuccess={() => {
-                  utils.teams.invalidate()
-                }}
-              />
+              <CreateTeamForm />
             </DialogContent>
           </Dialog>
         </div>
