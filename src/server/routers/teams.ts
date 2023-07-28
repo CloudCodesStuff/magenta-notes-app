@@ -5,12 +5,21 @@ import { getTeamsForUser } from '@/lib/services/teams/get-for-user'
 import { createTeamSchema } from '@/lib/schemas/create-team'
 import { createTeam } from '@/lib/services/teams/create'
 import { deleteTeam } from '@/lib/services/teams/delete-team'
+import { getTeamById } from '@/lib/services/teams/get-by-id'
 
 const teamsRouter = router({
   getCurrentUserTeams: procedure.use(isAuthenticated).query(async (opts) => {
     const teams = await getTeamsForUser(opts.ctx.session.user.id)
     return teams
   }),
+
+  getTeamById: procedure
+    .use(isAuthenticated)
+    .input(z.string())
+    .query(async (opts) => {
+      const team = await getTeamById(opts.input)
+      return team
+    }),
 
   createTeam: procedure
     .use(isAuthenticated)
