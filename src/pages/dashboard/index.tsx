@@ -98,9 +98,9 @@ const Page: NextPageWithLayout = () => {
             <div className="flex flex-col gap-4">
               {teamsQuery.data?.map((team) => (
                 <div key={team.id} className="border p-2 rounded">
-                  <div>ID: {team.id}</div>
-                  <div>Name: {team.name}</div>
-                  <div>Description: {team.description}</div>
+                  <p className="truncate">ID: {team.id}</p>
+                  <p className="truncate">Name: {team.name}</p>
+                  <p className="truncate">Description: {team.description}</p>
                 </div>
               ))}
             </div>

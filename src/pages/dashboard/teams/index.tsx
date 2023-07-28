@@ -26,7 +26,6 @@ const Page: NextPageWithLayout = () => {
         <div className="flex w-full justify-between">
           <div>
             <CardTitle className="text-5xl font-bold">Teams</CardTitle>
-
             <CardDescription>Collaborate with others</CardDescription>
           </div>
 
