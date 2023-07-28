@@ -38,7 +38,7 @@ const notesRouter = router({
     .use(isAuthenticated)
     .input(updateNoteSchema)
     .mutation(async (opts) => {
-      const updatedNote = await updateNote(opts.input)
+      const updatedNote = await updateNote(opts.input, opts.ctx.session.user.id)
       return updatedNote
     }),
 

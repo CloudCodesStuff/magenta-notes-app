@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { updateNoteSchema, type UpdateNoteInput } from '@/lib/schemas/update-note'
 import { trpc, type RouterOutput } from '@/lib/trpc'
+import { TagComboboxInput } from '../tag-combo-box'
 
 type MutationOutput = RouterOutput['notes']['updateNote']
 
@@ -85,6 +86,18 @@ export default function UpdateNoteForm(props: Props) {
           control={form.control}
           name="id"
           render={({ field }) => <Input {...field} type="hidden" />}
+        />
+
+        <FormField
+          control={form.control}
+          name="id"
+          render={({ field }) => <Input {...field} type="hidden" />}
+        />
+
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => <TagComboboxInput {...field} />}
         />
 
         <Button type="submit">

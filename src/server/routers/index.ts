@@ -3,6 +3,7 @@ import exampleRouter from './example'
 import examplePrismaRouter from './example-prisma'
 import notesRouter from './notes'
 import userRouter from './user'
+import tagsRouter from './tags'
 import teamsRouter from './teams'
 import workspacesRouter from './workspaces'
 
@@ -11,6 +12,7 @@ export const appRouter = router({
   examplePrisma: examplePrismaRouter,
   notes: notesRouter,
   users: userRouter,
+  tags: tagsRouter,
   teams: teamsRouter,
   workspaces: workspacesRouter,
 })

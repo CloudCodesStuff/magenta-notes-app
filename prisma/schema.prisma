@@ -1,11 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -50,6 +50,7 @@ model User {
   NoteCollaborators      NoteCollaborators[]
   TeamCollaborators      TeamCollaborators[]
   Note                   Note[]
+  Tag                    Tag[]
 
   @@fulltext([name])
 }
@@ -106,8 +107,33 @@ model Note {
   updatedAt     DateTime            @updatedAt
   StarredNote   StarredNote[]
   collaborators NoteCollaborators[]
+  Tag           Tag?                @relation(fields: [tagId], references: [id])
+  tagId         String?
+  NoteTags      NoteTags[]
 
   @@index([id])
+}
+
+model Tag {
+  id          String     @id @default(cuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  name        String
+  description String?
+  color       String?
+  notes       Note[]
+  NoteTags    NoteTags[]
+
+  @@index([id, userId])
+}
+
+model NoteTags {
+  noteId String
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  tagId  String
+  tag    Tag    @relation(fields: [tagId], references: [id])
+
+  @@id([noteId, tagId])
 }
 
 model WorkspaceCollaborators {

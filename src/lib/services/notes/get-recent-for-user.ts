@@ -30,11 +30,11 @@ export async function getRecentNotesForUser(userId: string) {
     take: 10,
   })
 
-  const withStarredNotes = allNotes.map((note) => {
-    return {
-      ...note,
-      starred: note.StarredNote.length > 0,
-    }
+  type NoteWithStar = (typeof allNotes)[number] & { starred?: boolean }
+
+  const withStarredNotes = allNotes.map((note: NoteWithStar) => {
+    note.starred = note.StarredNote.length > 0
+    return note
   })
 
   return withStarredNotes

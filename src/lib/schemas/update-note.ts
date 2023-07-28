@@ -11,6 +11,7 @@ export const updateNoteSchema = z.object({
     .optional()
     .transform((value) => value || undefined),
   content: z.any().optional(),
+  tags: z.object({ id: z.string().nullish(), name: z.string() }).array().optional(),
 })
 
 export type UpdateNoteInput = z.infer<typeof updateNoteSchema>

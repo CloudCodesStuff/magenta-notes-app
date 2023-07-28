@@ -1,9 +1,9 @@
-import { ComboboxInput } from '@/components/combo-box'
+import { TagComboboxInput } from '@/components/tag-combo-box'
 
 export default function Page() {
   return (
     <div>
-      <ComboboxInput />
+      <TagComboboxInput />
     </div>
   )
 }

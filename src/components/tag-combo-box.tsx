@@ -1,45 +1,64 @@
-import { useCallback, useMemo, useState } from 'react'
+import { forwardRef, useCallback, useMemo, useState } from 'react'
 import { Combobox } from '@headlessui/react'
 import { Badge } from './ui/badge'
-
-const people = [
-  { id: 1, name: 'Durward Reynolds' },
-  { id: 2, name: 'Kenton Towne' },
-  { id: 3, name: 'Therese Wunsch' },
-  { id: 4, name: 'Benedict Kessler' },
-  { id: 5, name: 'Katelyn Rohan' },
-]
+import { RouterOutput, trpc } from '@/lib/trpc'
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const multiple: any = true
 
-export function ComboboxInput() {
-  const [selectedPeople, setSelectedPeople] = useState([people[0], people[1]])
-  const [query, setQuery] = useState('')
+export type Tag = RouterOutput['tags']['getAll'][number]
 
-  const unselectedPeople = useMemo(() => {
-    return people.filter((person) =>
-      query
-        ? person.name.toLowerCase().includes(query.toLowerCase()) &&
-          !selectedPeople.includes(person)
-        : !selectedPeople.includes(person),
+interface Props {
+  onChange?: (tags: Tag[]) => unknown
+}
+
+/**
+ * Adds tags.
+ */
+export const TagComboboxInput = forwardRef<HTMLElement, Props>((props: Props = {}, ref) => {
+  const query = trpc.tags.getAll.useQuery()
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [input, setInput] = useState('')
+
+  const unselectedTags = useMemo(() => {
+    return query.data?.filter((tag) =>
+      input
+        ? tag.name.toLowerCase().includes(input.toLowerCase()) && !selectedTags.includes(tag)
+        : !selectedTags.includes(tag),
     )
-  }, [selectedPeople, query])
+  }, [query.data, selectedTags, input])
 
   const handleUnselect = useCallback(
-    (person: (typeof people)[number]) => {
-      setSelectedPeople((people) => people.filter((p) => p.id !== person.id))
+    (tag: Tag) => {
+      setSelectedTags((currentSelectedTags) =>
+        currentSelectedTags.filter((p) => p.name !== tag.name),
+      )
     },
-    [setSelectedPeople],
+    [setSelectedTags],
+  )
+
+  const handleChange = useCallback(
+    (tags: Tag[]) => {
+      setSelectedTags(tags)
+      props.onChange?.(tags)
+    },
+    [setSelectedTags],
   )
 
   return (
     <div>
-      <Combobox value={selectedPeople} onChange={setSelectedPeople} multiple={multiple} as="div">
-        {selectedPeople.length > 0 && (
-          <ul>
-            {selectedPeople.map((person) => (
-              <li key={person.id}>
+      <Combobox
+        value={selectedTags}
+        onChange={handleChange}
+        multiple={multiple}
+        as="div"
+        name="tags"
+        ref={ref}
+      >
+        {selectedTags.length > 0 && (
+          <ul className="m-2 p-2 flex gap-2">
+            {selectedTags.map((person, index) => (
+              <li key={person.id ?? index}>
                 <Badge onClick={() => handleUnselect(person)}>{person.name}</Badge>
               </li>
             ))}
@@ -50,31 +69,33 @@ export function ComboboxInput() {
         <Combobox.Button as="div">
           <Combobox.Input
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => setInput(event.target.value)}
           />
         </Combobox.Button>
 
         <Combobox.Options className="flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground">
-          {unselectedPeople.map((person) => (
+          {unselectedTags?.map((tag) => (
             <Combobox.Option
-              key={person.id}
-              value={person}
+              key={tag.id}
+              value={tag}
               className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-accent"
             >
-              {person.name}
+              {tag.name}
             </Combobox.Option>
           ))}
 
-          {query.length > 0 && (
+          {input.length > 0 && (
             <Combobox.Option
-              value={{ id: null, name: query }}
+              value={{ id: null, name: input }}
               className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-accent"
             >
-              Create &#34;{query}&#34;
+              Create &#34;{input}&#34;
             </Combobox.Option>
           )}
         </Combobox.Options>
       </Combobox>
     </div>
   )
-}
+})
+
+TagComboboxInput.displayName = 'TagComboboxInput'
